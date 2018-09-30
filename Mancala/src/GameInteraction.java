@@ -34,7 +34,6 @@ public class GameInteraction extends JPanel {
 		mancala = loadImage("Mancala.png");
 		
 		
-		//bgImage = loadImage("background.png");
 		//drawImage = loadImage("Draw.png");
 		//winImage = loadImage("Winner.png");
 		//loseImage = loadImage("Loser.png");

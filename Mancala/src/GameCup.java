@@ -1,3 +1,5 @@
+import java.awt.Rectangle;
+
 /**
  * Game cup for Mancala board
  * @author Jack Gilcrest
@@ -7,6 +9,7 @@ public class GameCup implements Cup{
 
 	private int num_stones;
 	private Cup next_cup;
+	private Rectangle area;
 	//private player owner;
 	
 	public GameCup(int start_stones) {
@@ -60,5 +63,14 @@ public class GameCup implements Cup{
 	 */
 	public Cup getNextCup() {
 		return next_cup;
+	}
+	
+	
+	/**
+	 * Gets the selection area for the cup on the screen 
+	 * @return
+	 */
+	public Rectangle getSelectionArea() {
+		return area;
 	}
 }
