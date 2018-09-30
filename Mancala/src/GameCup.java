@@ -12,8 +12,9 @@ public class GameCup implements Cup{
 	private Rectangle area;
 	//private player owner;
 	
-	public GameCup(int start_stones) {
+	public GameCup(int start_stones, Rectangle a) {
 		num_stones = start_stones;
+		area = a;
 	}
 	
 	/**
