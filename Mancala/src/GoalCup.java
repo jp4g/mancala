@@ -1,3 +1,5 @@
+import java.awt.Rectangle;
+
 /**
  * Goal cup for Mancala board
  * @author Jack Gilcrest
@@ -7,7 +9,8 @@ public class GoalCup implements Cup {
 
 	private int num_stones;
 	private Cup next_cup;
-	//private player owner;
+	private boolean player; // true if cup is owned by the player, false if the cup is owned by the computer
+	private Rectangle ui_rectangle;
 	
 	public GoalCup() { 
 		num_stones = 0;
@@ -52,4 +55,36 @@ public class GoalCup implements Cup {
 		return next_cup;
 	}
 
+	/**
+	 * Set the class boolean "player" to reflect cup ownership
+	 * @param player true if cup should be owned by player, false otherwise
+	 */
+	public void setPlayerOwner(boolean player) {
+		this.player = player;
+	}
+	
+	/**
+	 * Return boolean value reflecting ownership of cup
+	 * @return true if owned by player, and false otherwise
+	 */
+	public boolean getPlayerOwner() {
+		return player;
+	}
+	
+	/**
+	 * Add reference to the rectangle representing the cup in the UI
+	 * @param r Rectangle object in UI
+	 */
+	public void setRectangle(Rectangle r) {
+		r = ui_rectangle;
+	}
+	
+	/**
+	 * Return the rectangle representing the cup in the UI
+	 * @return the rectangle
+	 */
+	public Rectangle getRectangle() {
+		return ui_rectangle;
+	}
+	
 }

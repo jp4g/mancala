@@ -1,3 +1,5 @@
+import java.awt.Rectangle;
+
 /**
  * Interface for Mancala cups
  * Used for goal cups and game cups
@@ -35,4 +37,27 @@ public interface Cup {
 	 */
 	public Cup getNextCup();
 	
+	/**
+	 * Set the class boolean "player" to reflect cup ownership
+	 * @param player true if cup should be owned by player, false otherwise
+	 */
+	public void setPlayerOwner(boolean player);
+	
+	/**
+	 * Return boolean value reflecting ownership of cup
+	 * @return true if owned by player, and false otherwise
+	 */
+	public boolean getPlayerOwner();
+	
+	/**
+	 * Add reference to the rectangle representing the cup in the UI
+	 * @param r Rectangle object in UI
+	 */
+	public void setRectangle(Rectangle r);
+	
+	/**
+	 * Return the rectangle representing the cup in the UI
+	 * @return the rectangle
+	 */
+	public Rectangle getRectangle();
 }
