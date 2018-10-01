@@ -39,8 +39,19 @@ public class GameInteraction extends JPanel {
 
 	public GameInteraction() {
 
+<<<<<<< HEAD
 		hasGameStarted = false;
 		loadImages();
+=======
+		mancalaBoard = loadImage("MancalaBoard.png");
+		mancala = loadImage("Mancala.png");
+		
+		
+		//bgImage = loadImage("background.png");
+		//drawImage = loadImage("Draw.png");
+		//winImage = loadImage("Winner.png");
+		//loseImage = loadImage("Loser.png");
+>>>>>>> parent of 6401930... Merge branch 'master' of https://github.com/jp4g/mancala
 
 		window.setBounds(tk.getScreenSize().width / 2 - 600, tk.getScreenSize().height / 2 - 400, 1200, 800);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
