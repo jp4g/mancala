@@ -1,5 +1,8 @@
 import java.awt.Rectangle;
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+>>>>>>> d7e4d738f2bf1c4b9bd0369ba0799a5faa2df00c
 
 /**
  * Game cup for Mancala board
@@ -10,11 +13,20 @@ public class GameCup implements Cup{
 	private final int STARTING_STONES = 4;
 	private int num_stones;
 	private Cup next_cup;
+<<<<<<< HEAD
 	private boolean player; // true if cup is owned by the player, false if the cup is owned by the computer
 	private Rectangle ui_rectangle;
 	
 	public GameCup() {
 		num_stones = STARTING_STONES;
+=======
+	private Rectangle area;
+	//private player owner;
+	
+	public GameCup(int start_stones, Rectangle a) {
+		num_stones = start_stones;
+		area = a;
+>>>>>>> d7e4d738f2bf1c4b9bd0369ba0799a5faa2df00c
 	}
 	
 	/**
@@ -66,6 +78,7 @@ public class GameCup implements Cup{
 		return next_cup;
 	}
 	
+<<<<<<< HEAD
 	/**
 	 * Set the class boolean "player" to reflect cup ownership
 	 * @param player true if cup should be owned by player, false otherwise
@@ -104,4 +117,14 @@ public class GameCup implements Cup{
 		r.add(w2, h2, x2, y2);
 	}
 	
+=======
+	
+	/**
+	 * Gets the selection area for the cup on the screen 
+	 * @return
+	 */
+	public Rectangle getSelectionArea() {
+		return area;
+	}
+>>>>>>> d7e4d738f2bf1c4b9bd0369ba0799a5faa2df00c
 }
