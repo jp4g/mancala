@@ -13,7 +13,8 @@ public class GameCup implements Cup{
 	private boolean player; // true if cup is owned by the player, false if the cup is owned by the computer
 	private Rectangle ui_rectangle;
 	
-	public GameCup() {
+	public GameCup(Rectangle r) {
+		ui_rectangle = r;
 		num_stones = STARTING_STONES;
 	}
 	

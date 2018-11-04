@@ -23,6 +23,8 @@ public class GameInteraction extends JPanel {
 	public static boolean onHelpScreen;
 	public static boolean onGameScreen;
 	
+	public static Board board;
+	
 	public static JPanel panel;
 	public JFrame window = new JFrame("Mancala");
 	
@@ -60,6 +62,8 @@ public class GameInteraction extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
+				int pos = board.getBoardPosition(e.getPoint());
+				System.out.println(pos);	
 			}
 
 			@Override
@@ -240,7 +244,7 @@ public class GameInteraction extends JPanel {
 	 * Put code in here for what you want to happen when the game starts
 	 */
 	public static void startGame() {
-		
+		board = new Board();
 	}
 	
 	
