@@ -68,6 +68,7 @@ public class GameInteraction extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				
 			}
 
 			@Override
@@ -130,8 +131,6 @@ public class GameInteraction extends JPanel {
 		});
 		panel.add(backButton);
 		backButton.setVisible(false);
-		
-		
 		
 		JLabel m  = new JLabel(new ImageIcon(mancala));
 		panel.add(m);
