@@ -90,7 +90,46 @@ public class Board {
 //	}
 	
 	private void doPlayerMove() {
-		
+		ArrayList startBoard = new ArrayList(cups.subList(0, 6));
+		ArrayList secondBoard = new ArrayList(cups.subList(7, 13));
+		int stoneSelection = startBoard.getNumStones(move); //Get move selection
+		if (stoneSelection == 0) { //If no stones in cup selection
+			System.out.println("No stones in cup.");
+			
+		}
+		startBoard.removeStones(move); //Remove stones from cup selected
+		int currentPosition = move + 1;
+		for (int stonesLeft = stoneSelection; stonesLeft > 0; --stonesLeft) 
+		{
+			if (currentPosition < 13) 
+			{
+				cups.addStone;
+				currentPosition++;
+			} else if (currentPosition = 13)// on final cup, loop back to start
+				
+			{
+				cups.addStone;
+				currentPosition = 0;
+			}
+		}
+
+/*
+		if (currentPosition < 6 && startBoard.get(currentPosition) == 1) 
+		{
+			// last stone goes to empty spot
+
+			startBoard.set(6, startBoard.get(6) + secondBoard.get(5 - currentPosition) + 1);
+			startBoard.set(currentPosition, 0);
+			secondBoard.set(5 - currentPosition, 0);
+			turnOver = true;
+		}
+
+		if (currentPosition != 6) 
+		{
+			turn = !turn;
+
+		}
+*/
 	}
 
 	private void doComputerMove() {
