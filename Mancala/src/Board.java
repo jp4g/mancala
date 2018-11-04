@@ -64,6 +64,13 @@ public class Board {
 			else
 				doComputerMove();
 		}
+	}
+	
+	/**
+	 * Change board to reflect the move
+	 * @param cupIndex
+	 */
+	reflectMove(int cupIndex) {
 		
 	}
 	
