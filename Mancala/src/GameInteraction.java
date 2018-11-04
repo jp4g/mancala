@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -18,7 +19,9 @@ import javax.swing.JPanel;
 
 public class GameInteraction extends JPanel {
 
-	public static boolean hasGameStarted;
+	public static boolean onHomeScreen;
+	public static boolean onHelpScreen;
+	public static boolean onGameScreen;
 	
 	public static JPanel panel;
 	public JFrame window = new JFrame("Mancala");
@@ -28,6 +31,8 @@ public class GameInteraction extends JPanel {
 	//===================================================================== Menu Buttons
 	public static JButton startButton;
 	public static JButton quitButton;
+	public static JButton helpButton;
+	public static JButton backButton;
 
 	//===================================================================== Image Resources
 	public static BufferedImage mancalaBoard = null;
@@ -38,21 +43,11 @@ public class GameInteraction extends JPanel {
 
 
 	public GameInteraction() {
-
-<<<<<<< HEAD
-		hasGameStarted = false;
+		
+		//======================================================= Game Setup
 		loadImages();
-=======
-		mancalaBoard = loadImage("MancalaBoard.png");
-		mancala = loadImage("Mancala.png");
+		loadHomeScreen();
 		
-		
-		//bgImage = loadImage("background.png");
-		//drawImage = loadImage("Draw.png");
-		//winImage = loadImage("Winner.png");
-		//loseImage = loadImage("Loser.png");
->>>>>>> parent of 6401930... Merge branch 'master' of https://github.com/jp4g/mancala
-
 		window.setBounds(tk.getScreenSize().width / 2 - 600, tk.getScreenSize().height / 2 - 400, 1200, 800);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setAlwaysOnTop(true);
@@ -88,22 +83,35 @@ public class GameInteraction extends JPanel {
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		
-		
+		//======================================================= Initialize Buttons
 		startButton = new JButton("Start");
+		helpButton = new JButton("Help");
 		quitButton = new JButton("Quit");
+		backButton = new JButton("Back");
 		
-		startButton.setBounds(500, 600, 180, 60);
+		//======================================================= Start Button 
+		startButton.setBounds(500, 550, 180, 60);
 		startButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				hasGameStarted = true;
-				repaint();
+				loadGameScreen();
 				startGame();
 			}
 		});
 		panel.add(startButton);
 		
-		quitButton.setBounds(500, 670, 180, 60);
+		//======================================================= Help Button
+		helpButton.setBounds(500, 620, 180, 60);
+		helpButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loadHelpScreen();
+			}
+		});
+		panel.add(helpButton);
+		
+		//======================================================= Quit Button
+		quitButton.setBounds(500, 690, 180, 60);
 		quitButton.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -111,6 +119,19 @@ public class GameInteraction extends JPanel {
 			}
 		});
 		panel.add(quitButton);
+		
+		//======================================================= Back Button
+		backButton.setBounds(1000, 690, 180, 60);
+		backButton.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loadHomeScreen();
+			}
+		});
+		panel.add(backButton);
+		backButton.setVisible(false);
+		
+		
 		
 		JLabel m  = new JLabel(new ImageIcon(mancala));
 		panel.add(m);
@@ -121,13 +142,42 @@ public class GameInteraction extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if(!hasGameStarted) {
+		if(onHomeScreen) {
+			backButton.setVisible(false);
+			startButton.setVisible(true);
+			helpButton.setVisible(true);
+			quitButton.setVisible(true);
 			g.drawImage(mancala, 90, 50, null);
-		} else {
+		}
+		
+		if(onGameScreen) {
+			backButton.setVisible(true);
 			startButton.setVisible(false);
+			helpButton.setVisible(false);
 			quitButton.setVisible(false);
 			g.drawImage(mancalaBoard, 0, 0, null);
 		}
+		
+		if(onHelpScreen) {
+			startButton.setVisible(false);
+			helpButton.setVisible(false);
+			quitButton.setVisible(false);
+			backButton.setVisible(true);
+			
+			Font font = g.getFont().deriveFont(36.0f);
+			g.setFont(font);
+			g.drawString("Rules", 550, 100);
+			g.drawString("1. ", 200, 150);
+			g.drawString("2. ", 200, 200);
+			g.drawString("3. ", 200, 250);
+			g.drawString("4. ", 200, 300);
+			g.drawString("5. ", 200, 350);
+			g.drawString("6. ", 200, 400);
+			g.drawString("7. ", 200, 450);
+			g.drawString("8. ", 200, 500);
+			
+		}
+		
 		
 		
 		//Every board object will have to have a defined space (eg rectangle) in their class
@@ -143,6 +193,36 @@ public class GameInteraction extends JPanel {
 		//drawImage = loadImage("Draw.png");
 		//winImage = loadImage("Winner.png");
 		//loseImage = loadImage("Loser.png");
+	}
+	
+	/**
+	 * Change to Help Screen
+	 */
+	private void loadHelpScreen() {
+		onHelpScreen = true;
+		onHomeScreen = false;
+		onGameScreen = false;
+		repaint();
+	}
+	
+	/**
+	 * Change to Game Screen
+	 */
+	private void loadGameScreen() {
+		onHelpScreen = false;
+		onHomeScreen = false;
+		onGameScreen = true;
+		repaint();
+	}
+	
+	/**
+	 * Change to Home Screen
+	 */
+	private void loadHomeScreen() {
+		onHelpScreen = false;
+		onHomeScreen = true;
+		onGameScreen = false;
+		repaint();
 	}
 
 	public static BufferedImage loadImage(String i) {
@@ -163,6 +243,7 @@ public class GameInteraction extends JPanel {
 	public static void startGame() {
 		
 	}
+	
 	
 	public static void resetGame() {
 		
