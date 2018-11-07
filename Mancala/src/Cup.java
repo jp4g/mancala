@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 import java.awt.Rectangle;
 
 /**
@@ -60,4 +61,9 @@ public interface Cup {
 	 * @return the rectangle
 	 */
 	public Rectangle getRectangle();
+	
+	/**
+	 * Draw Stone Count
+	 */
+	public void drawStoneCount(Graphics g);
 }

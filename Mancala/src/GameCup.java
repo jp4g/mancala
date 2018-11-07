@@ -1,5 +1,9 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.util.ArrayList;
+
+import javax.swing.JTextArea;
 
 /**
  * Game cup for Mancala board
@@ -99,10 +103,16 @@ public class GameCup implements Cup{
 		return ui_rectangle;
 	}
 	
-	private void makeRect() {
-		ArrayList<Rectangle> r;
-		r.add(w1, h1, x1, y1);
-		r.add(w2, h2, x2, y2);
+	/**
+	 * Draw Stone Count
+	 */
+	public void drawStoneCount(Graphics g) {
+		Font font = new Font("Verdana", Font.BOLD, 24);
+		g.setFont(font);
+		g.setColor(Color.WHITE);
+		g.drawString(Integer.toString(num_stones), ui_rectangle.x + 45, ui_rectangle.y+60);
+		
+		//g.drawRect(ui_rectangle.x, ui_rectangle.y, ui_rectangle.width, ui_rectangle.height);
+		
 	}
-	
 }

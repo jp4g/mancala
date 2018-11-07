@@ -1,3 +1,6 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 
 /**
@@ -12,7 +15,8 @@ public class GoalCup implements Cup {
 	private boolean player; // true if cup is owned by the player, false if the cup is owned by the computer
 	private Rectangle ui_rectangle;
 	
-	public GoalCup() { 
+	public GoalCup(Rectangle r) { 
+		ui_rectangle = r;
 		num_stones = 0;
 	}
 	
@@ -85,6 +89,15 @@ public class GoalCup implements Cup {
 	 */
 	public Rectangle getRectangle() {
 		return ui_rectangle;
+	}
+
+	@Override
+	public void drawStoneCount(Graphics g) {
+		Font font = new Font("Verdana", Font.BOLD, 24);
+		g.setFont(font);
+		g.setColor(Color.WHITE);
+		g.drawString(Integer.toString(num_stones), ui_rectangle.x + 47, ui_rectangle.y+150);
+		
 	}
 	
 }

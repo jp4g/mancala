@@ -26,7 +26,7 @@ public class GameInteraction extends JPanel {
 	public static Board board;
 	
 	public static JPanel panel;
-	public JFrame window = new JFrame("Mancala");
+	public static JFrame window = new JFrame("Mancala");
 	
 	public Toolkit tk = Toolkit.getDefaultToolkit();
 	
@@ -47,8 +47,10 @@ public class GameInteraction extends JPanel {
 	public GameInteraction() {
 		
 		//======================================================= Game Setup
+		onHelpScreen = false;
+		onHomeScreen = true;
+		onGameScreen = false;
 		loadImages();
-		loadHomeScreen();
 		
 		window.setBounds(tk.getScreenSize().width / 2 - 600, tk.getScreenSize().height / 2 - 400, 1200, 800);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,8 +64,15 @@ public class GameInteraction extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				int pos = board.getBoardPosition(e.getPoint());
-				System.out.println(pos);	
+				if(onGameScreen) {
+					int pos = board.getBoardPosition(e.getPoint());
+					System.out.println(pos);
+					revalidate();
+					repaint();
+					
+				}	
+				
+				
 			}
 
 			@Override
@@ -103,7 +112,7 @@ public class GameInteraction extends JPanel {
 				startGame();
 			}
 		});
-		panel.add(startButton);
+		//panel.add(startButton);
 		
 		//======================================================= Help Button
 		helpButton.setBounds(500, 620, 180, 60);
@@ -113,8 +122,8 @@ public class GameInteraction extends JPanel {
 				loadHelpScreen();
 			}
 		});
-		panel.add(helpButton);
-		
+		//panel.add(helpButton);
+
 		//======================================================= Quit Button
 		quitButton.setBounds(500, 690, 180, 60);
 		quitButton.addActionListener(new ActionListener() {	
@@ -123,8 +132,8 @@ public class GameInteraction extends JPanel {
 				window.dispose();
 			}
 		});
-		panel.add(quitButton);
-		
+		//panel.add(quitButton);
+
 		//======================================================= Back Button
 		backButton.setBounds(1000, 690, 180, 60);
 		backButton.addActionListener(new ActionListener() {	
@@ -133,39 +142,48 @@ public class GameInteraction extends JPanel {
 				loadHomeScreen();
 			}
 		});
-		panel.add(backButton);
-		backButton.setVisible(false);
-		
+		//panel.add(backButton);
+
 		JLabel m  = new JLabel(new ImageIcon(mancala));
+		
+		panel.add(startButton);
+		panel.add(helpButton);
+		panel.add(quitButton);
+		panel.add(backButton);
 		panel.add(m);
 		
 		window.add(panel);
 	}
+	
+	
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
 		if(onHomeScreen) {
+			g.drawImage(mancala, 90, 50, null);
 			backButton.setVisible(false);
 			startButton.setVisible(true);
 			helpButton.setVisible(true);
 			quitButton.setVisible(true);
-			g.drawImage(mancala, 90, 50, null);
 		}
 		
 		if(onGameScreen) {
-			backButton.setVisible(true);
+			g.drawImage(mancalaBoard, 0, 0, null);
+			board.update(g);
 			startButton.setVisible(false);
 			helpButton.setVisible(false);
 			quitButton.setVisible(false);
-			g.drawImage(mancalaBoard, 0, 0, null);
+			backButton.setVisible(true);
 		}
 		
 		if(onHelpScreen) {
+			backButton.setVisible(true);
 			startButton.setVisible(false);
 			helpButton.setVisible(false);
 			quitButton.setVisible(false);
-			backButton.setVisible(true);
+			
 			
 			Font font = g.getFont().deriveFont(36.0f);
 			g.setFont(font);
@@ -180,8 +198,6 @@ public class GameInteraction extends JPanel {
 			g.drawString("8. ", 200, 500);
 			
 		}
-		
-		
 		
 		//Every board object will have to have a defined space (eg rectangle) in their class
 		//It will also need a draw() method to draw the amount of stones it has

@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -32,32 +33,17 @@ public class Board {
 
 	private void initialize() {
 		initCups();
-		//initializeCups();
 		//chooseFirst();
 	}
 	
-	private void initializeCups() { //p1: game cups[0-5] goal cup[6]; p2: game cups[7-12] goal cup[13]
-		for (int i = 0; i < 2; i++) { // make cup objects and add to ArrayList
-			for (int j = 0; j < 6; j++)
-				cups.add(new GameCup());
-			cups.add(new GoalCup());
-		}
-		//setRect();
-		for (int i = 0; i < 14; i++) { // initialize variables within cup object
-			cups.get(i).setNextCup(cups.get((i + 1) % 14));
-			//cups.get(i).setRectangle(w, h, x, y);
-			if (i / 7 == 0)
-				cups.get(i).setPlayerOwner(true);
-			else
-				cups.get(i).setPlayerOwner(false);
-		}
-	}
+	
 
 	private void chooseFirst() {
 		Random r = new Random();
 		playerTurn = r.nextBoolean();
 	}
 
+	
 	private void doMove() {
 		boolean turn = playerTurn;
 		while(turn == playerTurn) {
@@ -67,6 +53,7 @@ public class Board {
 				doComputerMove();
 		}
 	}
+	
 	
 	/**
 	 * Checks if the point is a valid spot to place 
@@ -81,15 +68,16 @@ public class Board {
 	}
 	
 	
-	
-	
 	/**
-	 * Change board to reflect the move
-	 * @param cupIndex
+	 * Update All Cups
 	 */
-	reflectMove(int cupIndex) {
+	public void update(Graphics g) {
+		for(int i = 0; i < cups.size(); i++) 
+			cups.get(i).drawStoneCount(g);
 		
 	}
+	
+	
 	
 	private void initCups() {
 		cups.add(new GameCup(new Rectangle(240, 410, 105, 105)));
@@ -100,7 +88,7 @@ public class Board {
 		cups.add(new GameCup(new Rectangle(855, 410, 105, 105)));
 		
 		//Add end cup
-		cups.add(new GameCup(new Rectangle(980, 235, 105, 290)));
+		cups.add(new GoalCup(new Rectangle(980, 235, 105, 290)));
 		
 		cups.add(new GameCup(new Rectangle(855, 240, 105, 105)));
 		cups.add(new GameCup(new Rectangle(735, 240, 105, 105)));
@@ -110,7 +98,7 @@ public class Board {
 		cups.add(new GameCup(new Rectangle(240, 240, 105, 105)));
 		
 		//Add end cup
-		cups.add(new GameCup(new Rectangle(110, 235, 105, 290)));
+		cups.add(new GoalCup(new Rectangle(110, 235, 105, 290)));
 	}
 	
 	private void doPlayerMove() {
