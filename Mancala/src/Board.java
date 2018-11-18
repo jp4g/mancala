@@ -145,7 +145,7 @@ public class Board {
 		int stones_held = ((GameCup) cups.get(startingPosition)).removeStones();
 		int index = trueIndex(startingPosition) ;
 		for(int i = 0; i < stones_held; i++) {
-				cups.get(index++).addStone();
+				cups.get(++index).addStone();
 				index = trueIndex(index);
 				//update ui
 			}
@@ -233,7 +233,7 @@ public class Board {
 	 * @return true if the player wins, false if the computer wins.
 	 */
 	private boolean playerWins() {
-		return cups.get(6) > cups.get(13);
+		return cups.get(6).getNumStones() > cups.get(13).getNumStones();
 	}
 
 }
