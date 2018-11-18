@@ -135,7 +135,24 @@ public class Board {
 	private int getPlayerPos() {
 		return 0;
 	}
+	
+	public boolean BestMove() {
+		int Distance = 0;
+		for (int i=13; i>7; i--) {
+			Distance++;
+			
+			int CupAmount = cups.get(i);
+			if(CupAmount == Distance) {
+				return true;	
+					
+			}else{
+				return false;
+			}
+		
+	}
+	}
 
+<<<<<<< HEAD
 	private void doMove() {
 		int startingPosition;
 		if(playerTurn) 
@@ -234,6 +251,20 @@ public class Board {
 	 */
 	private boolean playerWins() {
 		return cups.get(6).getNumStones() > cups.get(13).getNumStones();
+=======
+	private void doComputerMove() {
+	//if BestMove get extra turn
+		boolean Bestmove();
+		
+        //if can't get BestMove, try to move The movement allows the last stone to be placed on the computer side, 
+	//and when the last stone is placed, the number of the stones at that place is the same as the top and bottom.
+	
+		
+	//else, If there is a scoring area that can move the stone across the computer, choose the farthest after moving.
+		
+		
+	//else, If 7 has a stone, move 7。 If not, move 8 and so on.
+>>>>>>> 0d7a561d48ab97230abd829dd652eb3afd40937b
 	}
 
 }
