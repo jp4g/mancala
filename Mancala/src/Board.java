@@ -20,6 +20,10 @@ public class Board {
 	private ArrayList<Cup> cups = new ArrayList<Cup>();
 	boolean playerTurn;
 	public boolean animationInProgress = false;
+	private int index;
+	private int i;
+	private int stones_held;
+
 	/**
 	 * construct a new board object
 	 */
@@ -49,8 +53,7 @@ public class Board {
 	/**
 	 * Checks if the point is a valid spot to place
 	 * 
-	 * @param p
-	 *            Point of where player clicked
+	 * @param p Point of where player clicked
 	 * @return The positions index, -1 if not found
 	 */
 	public int getBoardPosition(Point p) {
@@ -64,14 +67,12 @@ public class Board {
 	 * Update All Cups
 	 */
 	public void updateAllCupsInstantly(Graphics g) {
-		for (int i = 0; i < cups.size(); i++) 
+		for (int i = 0; i < cups.size(); i++)
 			cups.get(i).drawStoneCount(g);
 	}
-	
-		
-	
+
 	public void paint(Graphics g) {
-		for (int i = 0; i < cups.size(); i++) 
+		for (int i = 0; i < cups.size(); i++)
 			cups.get(i).drawStoneCount(g);
 	}
 
@@ -97,43 +98,6 @@ public class Board {
 		cups.add(new GoalCup(new Rectangle(115, 235, 102, 280)));
 	}
 
-	// private void doPlayerMove() {
-	// ArrayList startBoard = new ArrayList(cups.subList(0, 6));
-	// ArrayList secondBoard = new ArrayList(cups.subList(7, 13));
-	// int stoneSelection = startBoard.getNumStones(move); //Get move selection
-	// if (stoneSelection == 0) { //If no stones in cup selection
-	// System.out.println("No stones in cup.");
-	//
-	// }
-	// startBoard.removeStones(move); //Remove stones from cup selected
-	// int currentPosition = move + 1;
-	// for (int stonesLeft = stoneSelection; stonesLeft > 0; --stonesLeft)
-	// {
-	// if (currentPosition < 13)
-	// {
-	// cups.addStone;
-	// currentPosition++;
-	// } else if (currentPosition = 13)// on final cup, loop back to start
-	//
-	// {
-	// cups.addStone;
-	// currentPosition = 0;
-	// }
-	// }
-
-	/*
-	 * if (currentPosition < 6 && startBoard.get(currentPosition) == 1) { // last
-	 * stone goes to empty spot
-	 * 
-	 * startBoard.set(6, startBoard.get(6) + secondBoard.get(5 - currentPosition) +
-	 * 1); startBoard.set(currentPosition, 0); secondBoard.set(5 - currentPosition,
-	 * 0); turnOver = true; }
-	 * 
-	 * if (currentPosition != 6) { turn = !turn;
-	 * 
-	 * }
-	 */
-
 	private int getComputerPos() {
 		return 0;
 	}
@@ -142,63 +106,41 @@ public class Board {
 		return 0;
 	}
 
-	public boolean BestMove() {
-		int Distance = 0;
-		for (int i = 13; i > 7; i--) {
-			Distance++;
-
-			int CupAmount = cups.get(i);
-			if (CupAmount == Distance) {
-				return true;
-
-			} else {
-				return false;
-			}
-
-		}
-	}
-
 	public void doMove() {
 		int startingPosition;
 		if (playerTurn)
 			startingPosition = getPlayerPos(); // get move position from ui input subsystem
 		else
 			startingPosition = getComputerPos(); // get move position from ai subsystem
-		
+
 		int stones_held = ((GameCup) cups.get(startingPosition)).removeStones();
 		int index = trueIndex(startingPosition);
 		for (int i = 0; i < stones_held; i++) {
 			cups.get(++index).addStone();
 			index = trueIndex(index);
-			//Main.window.repaintGamePanel();// update ui
-			//updateCupWithDelay(index);
+			// Main.window.repaintGamePanel();// update ui
+			// updateCupWithDelay(index);
 		}
 		turnEnd(index);
 	}
 
-	public static boolean waitForTimer = false;
-	
-	private int index;
-	private int i;
-	private int stones_held;
-	
-	public void doMove(int indx){
+	public void doMove(int indx) {
 		animationInProgress = true;
 		i = 0;
 		index = indx;
 		stones_held = ((GameCup) cups.get(index)).removeStones();
-		
+
 		index = trueIndex(index);
-		
+
 		Timer timer = new Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//I think im going to have to add a check in here for turnEnd
-				//Then if I can keep going reset i, stones_held to keep the counter going
-				if(i == stones_held || i > stones_held) {
+				// I think im going to have to add a check in here for turnEnd
+				// Then if I can keep going reset i, stones_held to keep the counter going
+				if (i == stones_held || i > stones_held) {
 					animationInProgress = false;
-					((Timer)e.getSource()).stop();
+					((Timer) e.getSource()).stop();
 				}
-				
+
 				cups.get(index++).addStone();
 				index = trueIndex(index);
 				i++;
@@ -209,18 +151,15 @@ public class Board {
 		timer.start();
 		turnEnd(index);
 	}
-	
-	
 
 	/**
 	 * determines whether the last stone placed in a turn was in a cup that ends the
 	 * turn (i.e. either goal cup (index 6 and 13) or in a cup with 0 stones
 	 * 
-	 * @param index
-	 *            the index to start at
-	 * @throws InterruptedException 
+	 * @param index the index to start at
+	 * @throws InterruptedException
 	 */
-	private void turnEnd(int index){
+	private void turnEnd(int index) {
 		if (index == 13 || index == 6 || cups.get(index).getNumStones() == 0)
 			playerTurn = !playerTurn;
 		else {
@@ -238,8 +177,7 @@ public class Board {
 	 * Refers to playerTurn boolean to determine if a cup is the opposing player's
 	 * cup
 	 * 
-	 * @param index
-	 *            the index of the cup being evaluated
+	 * @param index the index of the cup being evaluated
 	 * @return true if the cup is the opposing player's goal cup, and false
 	 *         otherwise
 	 */
@@ -282,8 +220,6 @@ public class Board {
 	private boolean tie() {
 		return cups.get(6) == cups.get(13);
 	}
-	
-	
 
 	/**
 	 * Determine if the game ends by the player winning.
@@ -292,48 +228,51 @@ public class Board {
 	 */
 	private boolean playerWins() {
 		return cups.get(6).getNumStones() > cups.get(13).getNumStones();
+	}
 
-	
 	private void doComputerMove() {
-	//if BestMove get extra turn
-	int Distance = 0;
-	int MaxMove;
-	for (int i=12; i>6; i--) {
-		Distance++;
-		MaxMove = Math.max(cups.get(i).getNumStones(),cups.get(i-1).getNumStones()-1);
-		
-		int StoneAmount = cups.get(i).getNumStones();
-		if(StoneAmount == Distance) {
-			computerMove =i;
-				
-		}
-				
-    //if can't get BestMove, try to move The movement allows the last stone to be placed on the computer side, 
-	//and when the last stone is placed, the number of the stones at that place is the same as the top and bottom.
-		else if(cups.get(i).getNumStones()> Distance+7){
-			if(cups.get(cups.get(i).getNumStones()+i - 14).getNumStones() == cups.get(cups.get(i).getNumStones()+i-2).getNumStones() ) {
+		// if BestMove get extra turn
+		int Distance = 0;
+		int MaxMove;
+		int computerMove;
+		for (int i = 12; i > 6; i--) {
+			Distance++;
+			MaxMove = Math.max(cups.get(i).getNumStones(), cups.get(i - 1).getNumStones() - 1);
+
+			int StoneAmount = cups.get(i).getNumStones();
+			if (StoneAmount == Distance) {
 				computerMove = i;
+
 			}
-			
-		
-		
-	//else, If there is a scoring area that can move the stone across the computer, choose the farthest after moving.
+
+			// if can't get BestMove, try to move The movement allows the last stone to be
+			// placed on the computer side,
+			// and when the last stone is placed, the number of the stones at that place is
+			// the same as the top and bottom.
+			else if (cups.get(i).getNumStones() > Distance + 7) {
+				if (cups.get(cups.get(i).getNumStones() + i - 14).getNumStones() == cups
+						.get(cups.get(i).getNumStones() + i - 2).getNumStones()) {
+					computerMove = i;
+				}
+
+				// else, If there is a scoring area that can move the stone across the computer,
+				// choose the farthest after moving.
+				else {
+					computerMove = MaxMove;
+				}
+			}
+
+			// else, If 7 has a stone, move 7。 If not, move 8 and so on.
 			else {
-		computerMove = MaxMove;	
-		}
-		}
-		
-	//else, If 7 has a stone, move 7。 If not, move 8 and so on.
-		else{
-			    for(int p = 7; p<13;p++) {
-				if(cups.get(p).getNumStones() != 0) {
-					computerMove = p;
-				}else {
-					System.out.println("No stones in cup.");
+				for (int p = 7; p < 13; p++) {
+					if (cups.get(p).getNumStones() != 0) {
+						computerMove = p;
+					} else {
+						System.out.println("No stones in cup.");
+					}
 				}
 			}
 		}
 	}
-}
 
 }
