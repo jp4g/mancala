@@ -176,6 +176,7 @@ public class Board {
 		turnEnd(index);
 	}
 
+	public static boolean waitForTimer = false;
 	
 	private int index;
 	private int i;

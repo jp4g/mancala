@@ -66,4 +66,8 @@ public interface Cup {
 	 * Draw Stone Count
 	 */
 	public void drawStoneCount(Graphics g);
+	
+	public void drawBadSelection(Graphics g);
+	
+	public void drawGoodSelection(Graphics g);
 }
