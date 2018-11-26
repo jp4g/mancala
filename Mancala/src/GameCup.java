@@ -2,7 +2,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+import javax.swing.JComponent;
 import javax.swing.JTextArea;
 
 /**
@@ -110,9 +113,19 @@ public class GameCup implements Cup{
 		Font font = new Font("Verdana", Font.BOLD, 24);
 		g.setFont(font);
 		g.setColor(Color.WHITE);
-		g.drawString(Integer.toString(num_stones), ui_rectangle.x + 45, ui_rectangle.y+60);
-		
-		//g.drawRect(ui_rectangle.x, ui_rectangle.y, ui_rectangle.width, ui_rectangle.height);
+		g.drawString(Integer.toString(num_stones), ui_rectangle.x + 45, ui_rectangle.y+60);	
+	}
+	
+	public void drawBadSelection(Graphics g) {
+		g.setColor(Color.RED);
+		g.drawRect(ui_rectangle.x, ui_rectangle.y, ui_rectangle.width, ui_rectangle.height);
+	}
+
+	@Override
+	public void drawGoodSelection(Graphics g) {
+		g.setColor(Color.GREEN);
+		g.drawRect(ui_rectangle.x, ui_rectangle.y, ui_rectangle.width, ui_rectangle.height);
 		
 	}
+
 }

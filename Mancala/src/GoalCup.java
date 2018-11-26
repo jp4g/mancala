@@ -99,5 +99,19 @@ public class GoalCup implements Cup {
 		g.drawString(Integer.toString(num_stones), ui_rectangle.x + 47, ui_rectangle.y+150);
 		
 	}
+
+	@Override
+	public void drawBadSelection(Graphics g) {
+		g.setColor(Color.RED);
+		g.drawRect(ui_rectangle.x, ui_rectangle.y, ui_rectangle.width, ui_rectangle.height);
+		
+	}
+
+	@Override
+	public void drawGoodSelection(Graphics g) {
+		g.setColor(Color.GREEN);
+		g.drawRect(ui_rectangle.x, ui_rectangle.y, ui_rectangle.width, ui_rectangle.height);
+		
+	}
 	
 }
