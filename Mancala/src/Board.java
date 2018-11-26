@@ -293,18 +293,47 @@ public class Board {
 	private boolean playerWins() {
 		return cups.get(6).getNumStones() > cups.get(13).getNumStones();
 
+	
 	private void doComputerMove() {
 	//if BestMove get extra turn
-		boolean Bestmove();
-	}
-        //if can't get BestMove, try to move The movement allows the last stone to be placed on the computer side, 
+	int Distance = 0;
+	int MaxMove;
+	for (int i=12; i>6; i--) {
+		Distance++;
+		MaxMove = Math.max(cups.get(i).getNumStones(),cups.get(i-1).getNumStones()-1);
+		
+		int StoneAmount = cups.get(i).getNumStones();
+		if(StoneAmount == Distance) {
+			computerMove =i;
+				
+		}
+				
+    //if can't get BestMove, try to move The movement allows the last stone to be placed on the computer side, 
 	//and when the last stone is placed, the number of the stones at that place is the same as the top and bottom.
-	
+		else if(cups.get(i).getNumStones()> Distance+7){
+			if(cups.get(cups.get(i).getNumStones()+i - 14).getNumStones() == cups.get(cups.get(i).getNumStones()+i-2).getNumStones() ) {
+				computerMove = i;
+			}
+			
+		
 		
 	//else, If there is a scoring area that can move the stone across the computer, choose the farthest after moving.
+			else {
+		computerMove = MaxMove;	
+		}
+		}
 		
-		
-
+	//else, If 7 has a stone, move 7。 If not, move 8 and so on.
+		else{
+			    for(int p = 7; p<13;p++) {
+				if(cups.get(p).getNumStones() != 0) {
+					computerMove = p;
+				}else {
+					System.out.println("No stones in cup.");
+				}
+			}
+		}
 	}
+}
 
 }
