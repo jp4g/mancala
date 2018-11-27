@@ -60,6 +60,14 @@ public class GameWindow extends JFrame {
 		revalidate();
 		helpPanel.repaint();
 	}
+	
+	public void showEndPanel(EndCondition e) {
+		endPanel = new EndPanel(e);
+		add(endPanel);
+		remove(gamePanel);
+		revalidate();
+		endPanel.repaint();
+	}
 
 	public void repaintGamePanel(){
 		gamePanel.repaint();
