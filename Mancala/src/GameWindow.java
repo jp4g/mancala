@@ -48,7 +48,6 @@ public class GameWindow extends JFrame {
 		add(homePanel);
 		remove(helpPanel);
 		remove(gamePanel);
-		remove(endPanel);
 		revalidate();
 		homePanel.repaint();
 	}
@@ -56,7 +55,6 @@ public class GameWindow extends JFrame {
 	public void showHelpPanel() {
 		add(helpPanel);
 		remove(homePanel);
-		remove(endPanel);
 		revalidate();
 		helpPanel.repaint();
 	}

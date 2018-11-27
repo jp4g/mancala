@@ -82,7 +82,7 @@ public class GamePanel extends JPanel implements MouseListener{
 			return;
 
 		if(board.validateMove(pos))
-			board.giveMoveUI(pos);
+			board.doMove(pos);
 		
 		/*
 		if (isClickablePosition(pos)) {

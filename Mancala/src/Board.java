@@ -4,9 +4,6 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.TimerTask;
-
 import javax.swing.Timer;
 
 /**
@@ -234,11 +231,26 @@ public class Board {
 		timer.start();
 		turnEnd(AL_index);
 	}
+	
+	/**
+	 * Executes a single move and updates graphics accordingly
+	 */
+	public void doMove(int index) {
+		AL_stones_placed = 1;
+		AL_index = index; // get the starting index of the move
+		animationInProgress = true; // prevent further ui input while true
+		AL_stones_held = ((GameCup) cups.get(AL_index)).removeStones(); // remove and remember stones from chosen cup
+		AL_index = trueIndex(AL_index); // find the index for the cup to start placing stones in
+
+		// Use timer to do animations
+		Timer timer = new Timer(500, getActionListener());
+		timer.start();
+	}
 
 	/**
 	 * Create an ActionListener object to reflect a move in the UI
 	 * 
-	 * @return the ActionListener objecy
+	 * @return the ActionListener object
 	 */
 	private ActionListener getActionListener() {
 		ActionListener a = new ActionListener() {
@@ -246,8 +258,9 @@ public class Board {
 				if (AL_stones_placed == AL_stones_held || AL_stones_placed > AL_stones_held) {
 					animationInProgress = false;
 					((Timer) e.getSource()).stop();
+					turnEnd(AL_index);
 				}
-				cups.get(AL_index++).addStone();
+				cups.get(AL_index).addStone();
 				AL_index = trueIndex(AL_index);
 				AL_stones_placed++;
 				System.out.println("Pause for 1 second");
@@ -274,11 +287,11 @@ public class Board {
 	 * @throws InterruptedException
 	 */
 	private void turnEnd(int index) {
-		if (index == 13 || index == 6 || cups.get(index).getNumStones() == 0)
+		if (index == 13 || index == 6 || cups.get(index).getNumStones() == 0) {
 			playerTurn = !playerTurn;
-		else {
-			doMove();
+			doMove(AI.getMoveIndex(getBoard()));
 		}
+		
 	}
 
 	/**
