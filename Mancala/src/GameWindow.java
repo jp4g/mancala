@@ -4,18 +4,19 @@ import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-
+/**
+ * GameWindow
+ * 
+ * @author Peter Cooke
+ */
 public class GameWindow extends JFrame {
-
-	public boolean onHomePanel;
-	public boolean onHelpPanel;
-	public boolean onGamePanel;
 	
 	public Toolkit tk = Toolkit.getDefaultToolkit();
 	
 	public GamePanel gamePanel;
 	public HomePanel homePanel;
 	public HelpPanel helpPanel;
+	public EndPanel endPanel;
 
 	
 	public GameWindow() {
@@ -38,26 +39,34 @@ public class GameWindow extends JFrame {
 		add(gamePanel);
 		remove(homePanel);
 		remove(helpPanel);
+		remove(endPanel);
 		revalidate();
 		gamePanel.repaint();
-		setGamePanel();
 	}
 
 	public void showHomePanel() {
 		add(homePanel);
 		remove(helpPanel);
 		remove(gamePanel);
+		remove(endPanel);
 		revalidate();
 		homePanel.repaint();
-		setHomePanel();
 	}
 	
 	public void showHelpPanel() {
 		add(helpPanel);
 		remove(homePanel);
+		remove(endPanel);
 		revalidate();
 		helpPanel.repaint();
-		setHelpPanel();
+	}
+	
+	public void showEndPanel(EndCondition e) {
+		endPanel = new EndPanel(e);
+		add(endPanel);
+		remove(gamePanel);
+		revalidate();
+		endPanel.repaint();
 	}
 
 	public void repaintGamePanel(){
@@ -82,21 +91,4 @@ public class GameWindow extends JFrame {
 		return null;
 	}
 	
-	private void setGamePanel() {
-		onHomePanel = false;
-		onGamePanel = true;
-		onHelpPanel = false;
-	}
-	
-	private void setHomePanel() {
-		onHomePanel = true;
-		onGamePanel = false;
-		onHelpPanel = false;
-	}
-	
-	private void setHelpPanel() {
-		onHomePanel = false;
-		onGamePanel = false;
-		onHelpPanel = true;
-	}
 }
