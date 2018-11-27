@@ -66,8 +66,9 @@ public class Board {
 	 * variable 'playerTurn' accordingly
 	 */
 	private void chooseFirst() {
-		Random r = new Random();
-		playerTurn = r.nextBoolean();
+		playerTurn = true;
+		//Random r = new Random();
+		//playerTurn = r.nextBoolean();
 	}
 
 	/**
