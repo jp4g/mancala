@@ -129,7 +129,56 @@ public class Board {
 	 * @return the index of the cup to begin moving from
 	 */
 	private int getComputerPos() {
-		return 0;
+		// Evaluate each cup to see if a second turn can be achieved
+		/** 1/4 preferred move type **/
+		for (int i = AI_GOAL_CUP - 1; i >= AI_FIRST_CUP; i--) {
+			if (cups.get(i).getNumStones() == AI_GOAL_CUP - i)
+				return i;
+		}
+
+		// Distance++; // increment distance as moving away from AI Opponent's goal cup
+		// If the last stone can move to the AI Opponent's cup, that cup is empty and
+		// the
+		// Player'ss cup have some stones,
+		// then do that move
+
+		/** 2/4 preferred move type **/
+		for (int i = AI_GOAL_CUP - 1; i >= AI_FIRST_CUP; i--) {
+			if (cups.get(i).getNumStones() == 0) { // if current cup has no stones
+				int qDistance = 0; //
+				int tDistance = 0;
+				for (int q = i; q >= AI_FIRST_CUP; q--) {
+					qDistance++;
+					if (cups.get(q).getNumStones() == qDistance && cups.get(12 - q).getNumStones() != 0)
+						return q;
+				}
+				for (int t = i; t < 13; t++) {
+					tDistance++;
+					if (cups.get(t).getNumStones() + tDistance == 14 && cups.get(12 - t).getNumStones() != 0)
+						return t;
+				}
+			}
+		}
+
+		// Evaluate each cup to see if a stone can be placed in the bank
+		/** 3/4 preferred move type **/
+		for (int i = AI_GOAL_CUP - 1; i >= AI_FIRST_CUP; i--) {
+			if (i + cups.get(i).getNumStones() >= AI_GOAL_CUP)
+				return i;
+		}
+
+		// Iterate from the AI Opponent's first game cup to its last game cup
+		// Returns the first cup it finds that has stones
+		/** 4/4 preferred move type **/
+		for (int i = AI_FIRST_CUP; i < AI_GOAL_CUP; i++) {
+			if (cups.get(i).getNumStones() != 0)
+				return i;
+		}
+		
+		// No cup on the AI Opponent's side of the board had stones and the AI cannot make a move
+		// This should not ever occur.
+		System.out.println("There are no AI Opponent game cups containing stones.");
+		return -1;
 	}
 
 	/**
@@ -285,60 +334,6 @@ public class Board {
 	 */
 	private boolean playerWins() {
 		return cups.get(6).getNumStones() > cups.get(13).getNumStones();
-	}
-
-	private void doComputerMove() {
-		// if BestMove get extra turn
-		int Distance = 0; // distance of index from index of goal cup
-		int MaxMove; // index of the cup which will facilitate the longest move
-		int computerMove; // index of the final chosen move
-		for (int i = 12; i > 6; i--) {
-			Distance++;
-			MaxMove = Math.max(cups.get(i).getNumStones(), cups.get(i - 1).getNumStones() - 1);
-
-			int StoneAmount = cups.get(i).getNumStones();
-			if (StoneAmount == Distance) {
-				computerMove = i;
-
-			}
-
-			// If the last stone can move to the AI’s cup, that cup is empty and the
-			// opposite player’s cup have some stones,
-			// then do that move
-			else if (cups.get(i).getNumStones() == 0) {
-				int qDistance = 0;
-				int tDistance = 0;
-				for (int q = i; q > 6; q--) {
-					qDistance++;
-					if (cups.get(q).getNumStones() == qDistance && cups.get(12 - q).getNumStones() != 0) {
-						computerMove = q;
-					}
-				}
-				for (int t = i; t < 13; t++) {
-					tDistance++;
-					if (cups.get(t).getNumStones() + tDistance == 14 && cups.get(12 - t).getNumStones() != 0) {
-						computerMove = t;
-					}
-				}
-			}
-
-			// else, If there is a scoring area that can move the stone across the computer,
-			// choose the farthest after moving.
-			else if (cups.get(i).getNumStones() > Distance + 7) {
-				computerMove = MaxMove;
-			}
-
-			// else, If 7 has a stone, move 7。 If not, move 8 and so on.
-			else {
-				for (int p = 7; p < 13; p++) {
-					if (cups.get(p).getNumStones() != 0) {
-						computerMove = p;
-					} else {
-						System.out.println("No stones in cup.");
-					}
-				}
-			}
-		}
 	}
 
 	/**
