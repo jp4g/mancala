@@ -16,18 +16,18 @@ import javax.swing.Timer;
  * @date 09.12.2018
  */
 public class Board {
-	private final int STARTING_STONES_PER_CUP = 4; //stones placed in each game cup @ time of initialization
-	private ArrayList<Cup> cups = new ArrayList<Cup>(); //ArrayList storing Cup objects to simulate a board
-	boolean playerTurn; //Tracking whether it is the Player or the AI Opponent's turn
-	public boolean animationInProgress = false; //reflects whether an animation is running on screen
-	
-	//class variables stating board index ranges
+	private final int STARTING_STONES_PER_CUP = 4; // stones placed in each game cup @ time of initialization
+	private ArrayList<Cup> cups = new ArrayList<Cup>(); // ArrayList storing Cup objects to simulate a board
+	boolean playerTurn; // Tracking whether it is the Player or the AI Opponent's turn
+	public boolean animationInProgress = false; // reflects whether an animation is running on screen
+
+	// class variables stating board index ranges
 	private final int PLAYER_FIRST_CUP = 0;
 	private final int PLAYER_GOAL_CUP = 6;
 	private final int AI_FIRST_CUP = 7;
 	private final int AI_GOAL_CUP = 13;
-	
-	//class variables for action listener
+
+	// class variables for action listener
 	private int AL_stones_placed;
 	private int AL_stones_held;
 	private int AL_index;
@@ -164,14 +164,15 @@ public class Board {
 		AL_stones_held = ((GameCup) cups.get(AL_index)).removeStones(); // remove and remember stones from chosen cup
 		AL_index = trueIndex(AL_index); // find the index for the cup to start placing stones in
 
-		//Use timer to do animations
+		// Use timer to do animations
 		Timer timer = new Timer(1000, getActionListener());
 		timer.start();
 		turnEnd(AL_index);
 	}
-	
+
 	/**
 	 * Create an ActionListener object to reflect a move in the UI
+	 * 
 	 * @return the ActionListener objecy
 	 */
 	private ActionListener getActionListener() {
@@ -190,7 +191,7 @@ public class Board {
 		};
 		return a;
 	}
-	
+
 	/**
 	 * Reset class varaibles necessary for ActionListener after end of a move
 	 */
@@ -290,6 +291,7 @@ public class Board {
 	//if BestMove get extra turn
 	int Distance = 0;
 	int MaxMove;
+	int computerMove;
 	for (int i=12; i>6; i--) {
 		Distance++;
 		MaxMove = Math.max(cups.get(i).getNumStones(),cups.get(i-1).getNumStones()-1);
@@ -300,8 +302,8 @@ public class Board {
 				
 		}
 				
-    //If the last stone can move to the AI’s cup, that cup is empty and the opposite player’s cup have some stones, 
-	//then do that move
+		//If the last stone can move to the AI’s cup, that cup is empty and the opposite player’s cup have some stones, 
+		//then do that move
 		else if(cups.get(i).getNumStones() == 0){		
 			int qDistance = 0;
 			int tDistance = 0;
@@ -317,17 +319,17 @@ public class Board {
 					computerMove = t;
 				}
 			}
-			}
+		}
 			
 		
 		
-	//else, If there is a scoring area that can move the stone across the computer, choose the farthest after moving.
+		//else, If there is a scoring area that can move the stone across the computer, choose the farthest after moving.
 		else if(cups.get(i).getNumStones()> Distance+7){
 		computerMove = MaxMove;	
 		}
 		
 		
-	//else, If 7 has a stone, move 7。 If not, move 8 and so on.
+		//else, If 7 has a stone, move 7。 If not, move 8 and so on.
 		else{
 			    for(int p = 7; p<13;p++) {
 				if(cups.get(p).getNumStones() != 0) {
