@@ -32,7 +32,7 @@ public class AI {
 	 */
 	private static int move1(ArrayList<Cup> cups) {
 		int index = -1;
-		for (int i = AI_GOAL_CUP - 1; i >= AI_FIRST_CUP; i--) {
+		for (int i = AI_GOAL_CUP - 1; i >= AI_FIRST_CUP; i--) { // find a cup that allows for a second turn
 			if (cups.get(i).getNumStones() == AI_GOAL_CUP - i)
 				index = i;
 		}
@@ -47,30 +47,18 @@ public class AI {
 	 * @return the index of the cup to begin the move from
 	 */
 	private static int move2(ArrayList<Cup> cups) {
-		for(int i = AI_FIRST_CUP; i < AI_GOAL_CUP; i++) {
-			int target_index = (cups.get(i).getNumStones() + i);
-		}
-		
 		int index = -1;
-		for (int i = AI_GOAL_CUP - 1; i >= AI_FIRST_CUP; i--) {
-			if (cups.get(i).getNumStones() == 0) { // if current cup has no stones
-				int qDistance = 0; //
-				int tDistance = 0;
-				for (int q = i; q >= AI_FIRST_CUP; q--) {
-					qDistance++;
-					if (cups.get(q).getNumStones() == qDistance && cups.get(12 - q).getNumStones() != 0)
-						index = q;
-				}
-				for (int t = i; t < 13; t++) {
-					tDistance++;
-					if (cups.get(t).getNumStones() + tDistance == 14 && cups.get(12 - t).getNumStones() != 0)
-						index = t;
-				}
+		for(int i = AI_FIRST_CUP; i < AI_GOAL_CUP; i++) {
+			int target_index = (cups.get(i).getNumStones() + i) % 14; // find index of cup that last stone is placed in
+			int player_index = AI_GOAL_CUP - target_index - 1; // find corresponding cup on player's side
+			if(target_index >= AI_FIRST_CUP && target_index < AI_GOAL_CUP) { // ensure that target index is on AI's side
+				if (cups.get(target_index).getNumStones() == 0 && cups.get(player_index).getNumStones() != 0) // check capture conditions
+					index = i;
 			}
 		}
 		return index;
 	}
-	
+			
 	/**
 	 * Evaluate each cup to if a stone can be placed in the AI Opponent's bank. 
 	 * This is the third most preferred move type.
@@ -80,7 +68,7 @@ public class AI {
 	 */
 	private static int move3(ArrayList<Cup> cups) {
 		int index = -1;
-		for (int i = AI_GOAL_CUP - 1; i >= AI_FIRST_CUP; i--) {
+		for (int i = AI_GOAL_CUP - 1; i >= AI_FIRST_CUP; i--) { // find a cup that has enough stones to reach the AI Opponent's bank
 			if (i + cups.get(i).getNumStones() >= AI_GOAL_CUP)
 				index = i;
 		}
@@ -96,7 +84,7 @@ public class AI {
 	 */
 	private static int move4(ArrayList<Cup> cups) {
 		int index = -1;
-		for (int i = AI_FIRST_CUP; i < AI_GOAL_CUP; i++) {
+		for (int i = AI_FIRST_CUP; i < AI_GOAL_CUP; i++) { // find a cup with stones
 			if (cups.get(i).getNumStones() != 0)
 				index = i;
 		}
