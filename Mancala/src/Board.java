@@ -27,7 +27,8 @@ public class Board {
 	private final int PLAYER_GOAL_CUP = 6;
 	private final int AI_FIRST_CUP = 7;
 	private final int AI_GOAL_CUP = 13;
-
+	
+	
 	/**
 	 * construct a new board object
 	 */
@@ -353,4 +354,18 @@ public class Board {
 
 	}
 
+	/**
+	 * Choose which screen to display at end condition.
+	 */
+	private void handleEnd() {
+		if(tie())
+			Main.window.showEndPanel(EndCondition.TIE);
+		else {
+			if(playerWins())
+				Main.window.showEndPanel(EndCondition.WIN);
+			else
+				Main.window.showEndPanel(EndCondition.LOSE);
+		}
+	}
+	
 }
