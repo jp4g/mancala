@@ -27,7 +27,6 @@ public class Board {
 	private final int PLAYER_GOAL_CUP = 6;
 	private final int AI_FIRST_CUP = 7;
 	private final int AI_GOAL_CUP = 13;
-	
 
 	/**
 	 * construct a new board object
@@ -37,19 +36,25 @@ public class Board {
 	}
 
 	/**
-	 * Gets the board array list
+	 * Retrieve an ArrayList<Cup> that reflects the current game state
 	 * 
-	 * @return an array list representing the current state of the board
+	 * @return the ArrayList<Cup> of cups in the game
 	 */
 	public ArrayList<Cup> getBoard() {
 		return cups;
 	}
 
+	/**
+	 * Run all initializing methods for starting a new game
+	 */
 	private void initialize() {
 		initCups();
 		chooseFirst();
 	}
 
+	/**
+	 * Randomly select whether the Player or AI Opponent moves first and set class variable 'playerTurn' accordingly
+	 */
 	private void chooseFirst() {
 		Random r = new Random();
 		playerTurn = r.nextBoolean();
@@ -76,41 +81,61 @@ public class Board {
 			cups.get(i).drawStoneCount(g);
 	}
 
+	/**
+	 * Draws the number of stones in each cup
+	 * @param g
+	 */
 	public void paint(Graphics g) {
 		for (int i = 0; i < cups.size(); i++)
 			cups.get(i).drawStoneCount(g);
 	}
 
+	/**
+	 * Initialize all Cup objects used and add them to the ArrayList<Cup> cups class variable
+	 * States the dimensions for each up individually.
+	 */
 	private void initCups() {
+		//Player game cups
 		cups.add(new GameCup(new Rectangle(240, 410, 105, 105)));
 		cups.add(new GameCup(new Rectangle(360, 410, 105, 105)));
 		cups.add(new GameCup(new Rectangle(485, 410, 105, 105)));
 		cups.add(new GameCup(new Rectangle(610, 410, 105, 105)));
 		cups.add(new GameCup(new Rectangle(735, 410, 105, 105)));
 		cups.add(new GameCup(new Rectangle(855, 410, 105, 105)));
-
-		// Add end cup
+		//Player goal cup
 		cups.add(new GoalCup(new Rectangle(980, 235, 105, 280)));
 
+		//AI Opponent game cups
 		cups.add(new GameCup(new Rectangle(855, 240, 105, 105)));
 		cups.add(new GameCup(new Rectangle(735, 240, 105, 105)));
 		cups.add(new GameCup(new Rectangle(610, 240, 105, 105)));
 		cups.add(new GameCup(new Rectangle(485, 240, 105, 105)));
 		cups.add(new GameCup(new Rectangle(360, 240, 105, 105)));
 		cups.add(new GameCup(new Rectangle(240, 240, 105, 105)));
-
-		// Add end cup
+		// AI Opponent goal cup
 		cups.add(new GoalCup(new Rectangle(115, 235, 102, 280)));
 	}
 
+	/**
+	 * AI Opponent evaluates the board and returns its chosen move.
+	 * @return the index of the cup to begin moving from
+	 */
 	private int getComputerPos() {
 		return 0;
 	}
 
+	/**
+	 * UI accepts player input until a given move passes validation
+	 * @return the index of the cup to begin moving from
+	 */
 	private int getPlayerPos() {
 		return 0;
 	}
 
+	/**
+	 * Evaluates whose turn it is and gets the index of the cup to begin the move accordingly.
+	 * Once an index is selected, it makes the move. 
+	 */
 	public void doMove() {
 		int startingPosition;
 		if (playerTurn)
@@ -255,20 +280,18 @@ public class Board {
 			// and when the last stone is placed, the number of the stones at that place is
 			// the same as the top and bottom.
 			/** make it find empty, not equal **/
-			
-			
-			
-			//else if (cups.get(i).getNumStones() > Distance + 7) {
-			//	if (cups.get(cups.get(i).getNumStones() + i - 14).getNumStones() == cups
-			//			.get(cups.get(i).getNumStones() + i - 2).getNumStones()) {
-			//		computerMove = i;
-			//	}
-				// else, If there is a scoring area that can move the stone across the computer,
-				// choose the farthest after moving.
-			//	else {
-			//		computerMove = MaxMove;
-			//	}
-			//}
+
+			// else if (cups.get(i).getNumStones() > Distance + 7) {
+			// if (cups.get(cups.get(i).getNumStones() + i - 14).getNumStones() == cups
+			// .get(cups.get(i).getNumStones() + i - 2).getNumStones()) {
+			// computerMove = i;
+			// }
+			// else, If there is a scoring area that can move the stone across the computer,
+			// choose the farthest after moving.
+			// else {
+			// computerMove = MaxMove;
+			// }
+			// }
 
 			// else, If 7 has a stone, move 7。 If not, move 8 and so on.
 			else {
@@ -285,42 +308,42 @@ public class Board {
 
 	/**
 	 * Evaluate a given move to see if it conforms to the rules
+	 * 
 	 * @param move an integer giving the position to start moving from
 	 * @return true if the move is valid, and false otherwise
 	 */
 	private boolean validateMove(int move) {
-		//validate that the computer or player chose a cup that is on their side
-		if(playerTurn) {
-			//validate that the move index falls within the Player's game cup range
-			if(move > PLAYER_GOAL_CUP || move < PLAYER_FIRST_CUP) {
+		// validate that the computer or player chose a cup that is on their side
+		if (playerTurn) {
+			// validate that the move index falls within the Player's game cup range
+			if (move > PLAYER_GOAL_CUP || move < PLAYER_FIRST_CUP) {
 				System.out.println("Move chosen was on the AI Opponent's side of the board. Invalid move for Player.");
 				return false;
 			}
 		} else {
-			//validate that the move index falls within the AI Opponent's game cup range
-			if(move >= AI_GOAL_CUP || move < AI_FIRST_CUP) {
+			// validate that the move index falls within the AI Opponent's game cup range
+			if (move >= AI_GOAL_CUP || move < AI_FIRST_CUP) {
 				System.out.println("Move chosen was on the Player's side of the board. Invalid move for AI Opponent.");
 				return false;
 			}
 		}
-		
-		//validate that a bank was not chosen
-		if(move == PLAYER_GOAL_CUP || move == AI_GOAL_CUP) 
-		{
+
+		// validate that a bank was not chosen
+		if (move == PLAYER_GOAL_CUP || move == AI_GOAL_CUP) {
 			System.out.println("Cannot do move inside bank.");
 			return false;
 		}
-		
-		//validate that an empty cup was not chosen
-		else if (cups.get(move).getNumStones() == 0) { 
+
+		// validate that an empty cup was not chosen
+		else if (cups.get(move).getNumStones() == 0) {
 			System.out.println("No stones in cup.");
 			return false;
 		}
-		
-		//all validations have been successfully passed
+
+		// all validations have been successfully passed
 		else
 			return true;
 
 	}
-	
+
 }
