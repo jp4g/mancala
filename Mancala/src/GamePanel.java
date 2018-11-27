@@ -88,6 +88,10 @@ public class GamePanel extends JPanel implements MouseListener{
 		if (pos == -1)
 			return;
 
+		if(board.validateMove(pos))
+			board.doMove();
+		
+		/*
 		if (isClickablePosition(pos)) {
 			System.out.println(pos);
 			if (!board.animationInProgress)
@@ -97,6 +101,7 @@ public class GamePanel extends JPanel implements MouseListener{
 		} else {
 			// board.getBoard().get(pos).drawBadSelection(g);
 		}
+		*/
 		
 		
 	}

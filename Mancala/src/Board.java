@@ -342,7 +342,7 @@ public class Board {
 	 * @param move an integer giving the position to start moving from
 	 * @return true if the move is valid, and false otherwise
 	 */
-	private boolean validateMove(int move) {
+	public boolean validateMove(int move) {
 		// validate that the computer or player chose a cup that is on their side
 		if (playerTurn) {
 			// validate that the move index falls within the Player's game cup range
@@ -369,6 +369,10 @@ public class Board {
 			System.out.println("No stones in cup.");
 			return false;
 		}
+		
+		// validate that the animation is not in progress
+		else if (animationInProgress)
+			return false;
 
 		// all validations have been successfully passed
 		else
