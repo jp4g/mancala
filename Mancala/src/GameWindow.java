@@ -20,8 +20,8 @@ public class GameWindow extends JFrame {
 	public EndPanel endPanel;
 
 
-	public GameWindow() {
-		gamePanel = new GamePanel();
+	public GameWindow(Board board) {
+		gamePanel = new GamePanel(board);
 		homePanel = new HomePanel();
 		helpPanel = new HelpPanel();
 
