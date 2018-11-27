@@ -5,7 +5,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
+/**
+ * HelpPanel
+ * 
+ * @author Peter Cooke
+ */
 public class HelpPanel extends JPanel{
 	
 	public JButton backButton;
