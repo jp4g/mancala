@@ -16,19 +16,22 @@ import javax.swing.Timer;
  * @date 09.12.2018
  */
 public class Board {
-	private final int STARTING_STONES_PER_CUP = 4;
-	private ArrayList<Cup> cups = new ArrayList<Cup>();
-	boolean playerTurn;
-	public boolean animationInProgress = false;
-	private int index;
-	private int i;
-	private int stones_held;
+	private final int STARTING_STONES_PER_CUP = 4; //stones placed in each game cup @ time of initialization
+	private ArrayList<Cup> cups = new ArrayList<Cup>(); //ArrayList storing Cup objects to simulate a board
+	boolean playerTurn; //Tracking whether it is the Player or the AI Opponent's turn
+	public boolean animationInProgress = false; //reflects whether an animation is running on screen
+	
+	//class variables stating board index ranges
 	private final int PLAYER_FIRST_CUP = 0;
 	private final int PLAYER_GOAL_CUP = 6;
 	private final int AI_FIRST_CUP = 7;
 	private final int AI_GOAL_CUP = 13;
 	
-	
+	//class variables for action listener
+	private int AL_stones_placed;
+	private int AL_stones_held;
+	private int AL_index;
+
 	/**
 	 * construct a new board object
 	 */
@@ -51,10 +54,12 @@ public class Board {
 	private void initialize() {
 		initCups();
 		chooseFirst();
+		resetALVariables();
 	}
 
 	/**
-	 * Randomly select whether the Player or AI Opponent moves first and set class variable 'playerTurn' accordingly
+	 * Randomly select whether the Player or AI Opponent moves first and set class
+	 * variable 'playerTurn' accordingly
 	 */
 	private void chooseFirst() {
 		Random r = new Random();
@@ -84,6 +89,7 @@ public class Board {
 
 	/**
 	 * Draws the number of stones in each cup
+	 * 
 	 * @param g
 	 */
 	public void paint(Graphics g) {
@@ -92,21 +98,21 @@ public class Board {
 	}
 
 	/**
-	 * Initialize all Cup objects used and add them to the ArrayList<Cup> cups class variable
-	 * States the dimensions for each up individually.
+	 * Initialize all Cup objects used and add them to the ArrayList<Cup> cups class
+	 * variable States the dimensions for each up individually.
 	 */
 	private void initCups() {
-		//Player game cups
+		// Player game cups
 		cups.add(new GameCup(new Rectangle(240, 410, 105, 105)));
 		cups.add(new GameCup(new Rectangle(360, 410, 105, 105)));
 		cups.add(new GameCup(new Rectangle(485, 410, 105, 105)));
 		cups.add(new GameCup(new Rectangle(610, 410, 105, 105)));
 		cups.add(new GameCup(new Rectangle(735, 410, 105, 105)));
 		cups.add(new GameCup(new Rectangle(855, 410, 105, 105)));
-		//Player goal cup
+		// Player goal cup
 		cups.add(new GoalCup(new Rectangle(980, 235, 105, 280)));
 
-		//AI Opponent game cups
+		// AI Opponent game cups
 		cups.add(new GameCup(new Rectangle(855, 240, 105, 105)));
 		cups.add(new GameCup(new Rectangle(735, 240, 105, 105)));
 		cups.add(new GameCup(new Rectangle(610, 240, 105, 105)));
@@ -119,6 +125,7 @@ public class Board {
 
 	/**
 	 * AI Opponent evaluates the board and returns its chosen move.
+	 * 
 	 * @return the index of the cup to begin moving from
 	 */
 	private int getComputerPos() {
@@ -127,6 +134,7 @@ public class Board {
 
 	/**
 	 * UI accepts player input until a given move passes validation
+	 * 
 	 * @return the index of the cup to begin moving from
 	 */
 	private int getPlayerPos() {
@@ -134,53 +142,62 @@ public class Board {
 	}
 
 	/**
-	 * Evaluates whose turn it is and gets the index of the cup to begin the move accordingly.
-	 * Once an index is selected, it makes the move. 
+	 * Determines whether Player or AI Opponent gets to move next and returns the
+	 * index of their move accordingly
+	 * 
+	 * @return the index of the next move
 	 */
-	public void doMove() {
-		int startingPosition;
+	private int moveIndex() {
 		if (playerTurn)
-			startingPosition = getPlayerPos(); // get move position from ui input subsystem
+			return getPlayerPos(); // get move position from ui input subsystem
 		else
-			startingPosition = getComputerPos(); // get move position from ai subsystem
-
-		int stones_held = ((GameCup) cups.get(startingPosition)).removeStones();
-		int index = trueIndex(startingPosition);
-		for (int i = 0; i < stones_held; i++) {
-			cups.get(++index).addStone();
-			index = trueIndex(index);
-			// Main.window.repaintGamePanel();// update ui
-			// updateCupWithDelay(index);
-		}
-		turnEnd(index);
+			return getComputerPos(); // get move position from ai subsystem
 	}
 
-	public void doMove(int indx) {
-		animationInProgress = true;
-		i = 0;
-		index = indx;
-		stones_held = ((GameCup) cups.get(index)).removeStones();
+	/**
+	 * Executes a single move and updates graphics accordingly
+	 */
+	public void doMove() {
+		animationInProgress = true; // prevent further ui input while true
+		AL_stones_placed = 0;
+		AL_index = moveIndex(); // get the starting index of the move
+		AL_stones_held = ((GameCup) cups.get(AL_index)).removeStones(); // remove and remember stones from chosen cup
+		AL_index = trueIndex(AL_index); // find the index for the cup to start placing stones in
 
-		index = trueIndex(index);
-
-		Timer timer = new Timer(1000, new ActionListener() {
+		//Use timer to do animations
+		Timer timer = new Timer(1000, getActionListener());
+		timer.start();
+		turnEnd(AL_index);
+	}
+	
+	/**
+	 * Create an ActionListener object to reflect a move in the UI
+	 * @return the ActionListener objecy
+	 */
+	private ActionListener getActionListener() {
+		ActionListener a = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// I think im going to have to add a check in here for turnEnd
-				// Then if I can keep going reset i, stones_held to keep the counter going
-				if (i == stones_held || i > stones_held) {
+				if (AL_stones_placed == AL_stones_held || AL_stones_placed > AL_stones_held) {
 					animationInProgress = false;
 					((Timer) e.getSource()).stop();
 				}
-
-				cups.get(index++).addStone();
-				index = trueIndex(index);
-				i++;
+				cups.get(AL_index++).addStone();
+				AL_index = trueIndex(AL_index);
+				AL_stones_placed++;
 				System.out.println("Pause for 1 second");
 				Main.window.repaintGamePanel();
 			}
-		});
-		timer.start();
-		turnEnd(index);
+		};
+		return a;
+	}
+	
+	/**
+	 * Reset class varaibles necessary for ActionListener after end of a move
+	 */
+	private void resetALVariables() {
+		AL_stones_placed = -1;
+		AL_stones_held = -1;
+		AL_index = -1;
 	}
 
 	/**
@@ -194,14 +211,22 @@ public class Board {
 		if (index == 13 || index == 6 || cups.get(index).getNumStones() == 0)
 			playerTurn = !playerTurn;
 		else {
-			doMove(index);
+			doMove();
 		}
 	}
 
+	/**
+	 * Determines the index of the cup that the first stone of a turn should be
+	 * placed in
+	 * 
+	 * @param index the index chosen for the move
+	 * @return the index to begin placing stones in
+	 */
 	private int trueIndex(int index) {
-		if (opposingGoalCup(index))
-			index++;
-		return index % 14;
+		// prefix increment index to place first stone in the cup next to the chosen cup
+		// account for index being out of bounds of board by taking remainder of index /
+		// 14, then return
+		return ++index % 14;
 	}
 
 	/**
@@ -358,14 +383,14 @@ public class Board {
 	 * Choose which screen to display at end condition.
 	 */
 	private void handleEnd() {
-		if(tie())
+		if (tie())
 			Main.window.showEndPanel(EndCondition.TIE);
 		else {
-			if(playerWins())
+			if (playerWins())
 				Main.window.showEndPanel(EndCondition.WIN);
 			else
 				Main.window.showEndPanel(EndCondition.LOSE);
 		}
 	}
-	
+
 }
