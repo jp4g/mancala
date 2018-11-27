@@ -308,20 +308,32 @@ public class Board {
 				
 		}
 				
-    //if can't get BestMove, try to move The movement allows the last stone to be placed on the computer side, 
-	//and when the last stone is placed, the number of the stones at that place is the same as the top and bottom.
-		else if(cups.get(i).getNumStones()> Distance+7){
-			if(cups.get(cups.get(i).getNumStones()+i - 14).getNumStones() == cups.get(cups.get(i).getNumStones()+i-2).getNumStones() ) {
-				computerMove = i;
+    //If the last stone can move to the AI’s cup, that cup is empty and the opposite player’s cup have some stones, 
+	//then do that move
+		else if(cups.get(i).getNumStones() == 0){		
+			int qDistance = 0;
+			int tDistance = 0;
+			for(int q = i; q>6 ;q--) {
+			qDistance++;
+				if(cups.get(q).getNumStones() == qDistance) {
+					computerMove = q;
+				}
+			}
+			for(int t=i; t<13; t++) {
+				tDistance++;
+				if(cups.get(t).getNumStones()+tDistance == 14) {
+					computerMove = t;
+				}
+			}
 			}
 			
 		
 		
 	//else, If there is a scoring area that can move the stone across the computer, choose the farthest after moving.
-			else {
+		else if(cups.get(i).getNumStones()> Distance+7){
 		computerMove = MaxMove;	
 		}
-		}
+		
 		
 	//else, If 7 has a stone, move 7。 If not, move 8 and so on.
 		else{
