@@ -98,7 +98,7 @@ public class AI {
 		int index = -1;
 		for (int i = AI_GOAL_CUP - 1; i >= AI_FIRST_CUP; i--) {
 			if (i + cups.get(i).getNumStones() >= AI_GOAL_CUP)
-				index = i;;
+				index = i;
 		}
 		return index;
 	}
