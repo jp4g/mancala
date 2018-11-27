@@ -11,19 +11,18 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.plaf.synth.SynthSeparatorUI;
-
+/**
+ * GamePanel
+ * 
+ * @author Peter Cooke
+ */
 public class GamePanel extends JPanel implements MouseListener{
 	
 	public Board board;
 	
-	public static JButton backButton;
+	public JButton backButton;
 
-	public static BufferedImage mancalaBoard = null;
-	public static BufferedImage winImage = null;
-	public static BufferedImage loseImage = null;
-	public static BufferedImage drawImage = null;
-	
-
+	public BufferedImage mancalaBoard = null;
 
 	public GamePanel() {
 		mancalaBoard = GameWindow.loadImage("MancalaBoard.png");
