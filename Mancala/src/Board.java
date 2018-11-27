@@ -23,6 +23,11 @@ public class Board {
 	private int index;
 	private int i;
 	private int stones_held;
+	private final int PLAYER_FIRST_CUP = 0;
+	private final int PLAYER_GOAL_CUP = 6;
+	private final int AI_FIRST_CUP = 7;
+	private final int AI_GOAL_CUP = 13;
+	
 
 	/**
 	 * construct a new board object
@@ -278,4 +283,44 @@ public class Board {
 		}
 	}
 
+	/**
+	 * Evaluate a given move to see if it conforms to the rules
+	 * @param move an integer giving the position to start moving from
+	 * @return true if the move is valid, and false otherwise
+	 */
+	private boolean validateMove(int move) {
+		//validate that the computer or player chose a cup that is on their side
+		if(playerTurn) {
+			//validate that the move index falls within the Player's game cup range
+			if(move > PLAYER_GOAL_CUP || move < PLAYER_FIRST_CUP) {
+				System.out.println("Move chosen was on the AI Opponent's side of the board. Invalid move for Player.");
+				return false;
+			}
+		} else {
+			//validate that the move index falls within the AI Opponent's game cup range
+			if(move >= AI_GOAL_CUP || move < AI_FIRST_CUP) {
+				System.out.println("Move chosen was on the Player's side of the board. Invalid move for AI Opponent.");
+				return false;
+			}
+		}
+		
+		//validate that a bank was not chosen
+		if(move == PLAYER_GOAL_CUP || move == AI_GOAL_CUP) 
+		{
+			System.out.println("Cannot do move inside bank.");
+			return false;
+		}
+		
+		//validate that an empty cup was not chosen
+		else if (cups.get(move).getNumStones() == 0) { 
+			System.out.println("No stones in cup.");
+			return false;
+		}
+		
+		//all validations have been successfully passed
+		else
+			return true;
+
+	}
+	
 }
