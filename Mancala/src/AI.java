@@ -6,8 +6,13 @@ public class AI {
 	private static final int AI_FIRST_CUP = 7;
 	private static final int AI_GOAL_CUP = 13;
 
+	/**
+	 * Do 4 different searches for specific moves and return the best move found.
+	 * Returns -1 if no move is found. This should never happen: if there are no moves, the AI should not get another turn.
+	 * @param cups the ArrayList of cup objects
+	 * @return the index of the AI Opponent's chosen move
+	 */
 	public static int getMoveIndex(ArrayList<Cup> cups) {
-		
 		int move = move1(cups);
 		if(move != -1)
 			return move;
@@ -17,7 +22,6 @@ public class AI {
 		move = move3(cups);
 		return move4(cups);
 	}
-	
 	
 	/**
 	 * Evaluate each cup to see if a second turn can be achieved. 
@@ -43,6 +47,10 @@ public class AI {
 	 * @return the index of the cup to begin the move from
 	 */
 	private static int move2(ArrayList<Cup> cups) {
+		for(int i = AI_FIRST_CUP; i < AI_GOAL_CUP; i++) {
+			int target_index = (cups.get(i).getNumStones() + i);
+		}
+		
 		int index = -1;
 		for (int i = AI_GOAL_CUP - 1; i >= AI_FIRST_CUP; i--) {
 			if (cups.get(i).getNumStones() == 0) { // if current cup has no stones
