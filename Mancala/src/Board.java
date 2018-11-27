@@ -32,6 +32,9 @@ public class Board {
 	private int AL_stones_held;
 	private int AL_index;
 
+	// class variable for index of move passed by UI
+	private int UI_move;
+
 	/**
 	 * construct a new board object
 	 */
@@ -55,6 +58,7 @@ public class Board {
 		initCups();
 		chooseFirst();
 		resetALVariables();
+		UI_move = -1;
 	}
 
 	/**
@@ -174,11 +178,21 @@ public class Board {
 			if (cups.get(i).getNumStones() != 0)
 				return i;
 		}
-		
-		// No cup on the AI Opponent's side of the board had stones and the AI cannot make a move
+
+		// No cup on the AI Opponent's side of the board had stones and the AI cannot
+		// make a move
 		// This should not ever occur.
 		System.out.println("There are no AI Opponent game cups containing stones.");
 		return -1;
+	}
+
+	/**
+	 * Passes a move from the UI into the board class
+	 * 
+	 * @param index the index of the move being passed from the UI
+	 */
+	public void giveMoveUI(int index) {
+		UI_move = index;
 	}
 
 	/**
@@ -187,7 +201,9 @@ public class Board {
 	 * @return the index of the cup to begin moving from
 	 */
 	private int getPlayerPos() {
-		return 0;
+		while (UI_move == -1) {
+		}
+		return UI_move;
 	}
 
 	/**
@@ -207,9 +223,9 @@ public class Board {
 	 * Executes a single move and updates graphics accordingly
 	 */
 	public void doMove() {
-		animationInProgress = true; // prevent further ui input while true
 		AL_stones_placed = 0;
 		AL_index = moveIndex(); // get the starting index of the move
+		animationInProgress = true; // prevent further ui input while true
 		AL_stones_held = ((GameCup) cups.get(AL_index)).removeStones(); // remove and remember stones from chosen cup
 		AL_index = trueIndex(AL_index); // find the index for the cup to start placing stones in
 

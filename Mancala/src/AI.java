@@ -3,8 +3,6 @@ import java.util.ArrayList;
 public class AI {
 
 	// class variables stating board index ranges
-	private static final int PLAYER_FIRST_CUP = 0;
-	private static final int PLAYER_GOAL_CUP = 6;
 	private static final int AI_FIRST_CUP = 7;
 	private static final int AI_GOAL_CUP = 13;
 
@@ -17,31 +15,9 @@ public class AI {
 		if(move != -1)
 			return move;
 		move = move3(cups);
-		
-
-			
-
-		// Evaluate each cup to see if a stone can be placed in the bank
-		/** 3/4 preferred move type **/
-		
-
-		// Iterate from the AI Opponent's first game cup to its last game cup
-		// Returns the first cup it finds that has stones
-		/** 4/4 preferred move type **/
-		for (int i = AI_FIRST_CUP; i < AI_GOAL_CUP; i++) {
-			if (cups.get(i).getNumStones() != 0)
-				return i;
-		}
-
-		// No cup on the AI Opponent's side of the board had stones and the AI cannot
-		// make a move
-		// This should not ever occur.
-		System.out.println("There are no AI Opponent game cups containing stones.");
-		return -1;
+		return move4(cups);
 	}
 	
-	// 
-			/** 1/4 preferred move type **/
 	
 	/**
 	 * Evaluate each cup to see if a second turn can be achieved. 
@@ -100,6 +76,24 @@ public class AI {
 			if (i + cups.get(i).getNumStones() >= AI_GOAL_CUP)
 				index = i;
 		}
+		return index;
+	}
+	
+	/**
+	 * Scan each cup and return the index of the first cup containing stones
+	 * This is the least preferred move type.
+	 * Returns -1 if no move is found.
+	 * @param cups the ArrayList of cup objects
+	 * @return the index of the cup to begin the move from
+	 */
+	private static int move4(ArrayList<Cup> cups) {
+		int index = -1;
+		for (int i = AI_FIRST_CUP; i < AI_GOAL_CUP; i++) {
+			if (cups.get(i).getNumStones() != 0)
+				index = i;
+		}
+		if(index == -1) //this should never occur.
+			System.out.println("There are no AI Opponent game cups containing stones.");
 		return index;
 	}
 	
