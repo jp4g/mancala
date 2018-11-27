@@ -16,7 +16,6 @@ import javax.swing.Timer;
  * @date 09.12.2018
  */
 public class Board {
-	private final int STARTING_STONES_PER_CUP = 4; // stones placed in each game cup @ time of initialization
 	private ArrayList<Cup> cups = new ArrayList<Cup>(); // ArrayList storing Cup objects to simulate a board
 	boolean playerTurn; // Tracking whether it is the Player or the AI Opponent's turn
 	public boolean animationInProgress = false; // reflects whether an animation is running on screen

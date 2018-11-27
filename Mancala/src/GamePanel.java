@@ -62,14 +62,12 @@ public class GamePanel extends JPanel implements MouseListener{
 		
 	}
 	
-
-	
 	
 	/**
 	 * Put code in here for what you want to happen when the game starts
 	 */
-	public void startGame() {
-		board = new Board();
+	public void startGame(Board board) {
+		this.board = board;
 	}
 	
 	
