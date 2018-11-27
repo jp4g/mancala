@@ -12,9 +12,7 @@ public class Main {
 	 * initialize all functions necessary for game operation
 	 */
 	private static void initialize() {
-		window = new GameWindow();
 		board = new Board();
-		
+		window = new GameWindow(board);	
 	}
-
 }

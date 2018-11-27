@@ -20,7 +20,8 @@ public class GamePanel extends JPanel implements MouseListener{
 
 	public BufferedImage mancalaBoard = null;
 
-	public GamePanel() {
+	public GamePanel(Board board) {
+		this.board = board;
 		mancalaBoard = GameWindow.loadImage("MancalaBoard.png");
 		setLayout(null);
 		
@@ -36,8 +37,6 @@ public class GamePanel extends JPanel implements MouseListener{
 		
 		add(backButton);
 		addMouseListener(this);
-		
-		startGame();
 	}
 	
 
@@ -60,9 +59,9 @@ public class GamePanel extends JPanel implements MouseListener{
 	
 	
 	/**
-	 * Put code in here for what you want to happen when the game starts
+	 * Pass a reference to the board
 	 */
-	public void startGame(Board board) {
+	public void setBoard(Board board) {
 		this.board = board;
 	}
 	
