@@ -5,12 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.Timer;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 /**
  * GamePanel
  * 
@@ -89,7 +85,7 @@ public class GamePanel extends JPanel implements MouseListener{
 			return;
 
 		if(board.validateMove(pos))
-			board.doMove();
+			board.giveMoveUI(pos);
 		
 		/*
 		if (isClickablePosition(pos)) {
