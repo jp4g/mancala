@@ -7,9 +7,6 @@ import javax.swing.JFrame;
 
 public class GameWindow extends JFrame {
 
-	public boolean onHomePanel;
-	public boolean onHelpPanel;
-	public boolean onGamePanel;
 	
 	public Toolkit tk = Toolkit.getDefaultToolkit();
 	
@@ -40,7 +37,7 @@ public class GameWindow extends JFrame {
 		remove(helpPanel);
 		revalidate();
 		gamePanel.repaint();
-		setGamePanel();
+		//setGamePanel();
 	}
 
 	public void showHomePanel() {
@@ -49,7 +46,7 @@ public class GameWindow extends JFrame {
 		remove(gamePanel);
 		revalidate();
 		homePanel.repaint();
-		setHomePanel();
+		//setHomePanel();
 	}
 	
 	public void showHelpPanel() {
@@ -57,7 +54,7 @@ public class GameWindow extends JFrame {
 		remove(homePanel);
 		revalidate();
 		helpPanel.repaint();
-		setHelpPanel();
+		//setHelpPanel();
 	}
 
 	public void repaintGamePanel(){
@@ -82,21 +79,5 @@ public class GameWindow extends JFrame {
 		return null;
 	}
 	
-	private void setGamePanel() {
-		onHomePanel = false;
-		onGamePanel = true;
-		onHelpPanel = false;
-	}
 	
-	private void setHomePanel() {
-		onHomePanel = true;
-		onGamePanel = false;
-		onHelpPanel = false;
-	}
-	
-	private void setHelpPanel() {
-		onHomePanel = false;
-		onGamePanel = false;
-		onHelpPanel = true;
-	}
 }
