@@ -236,7 +236,7 @@ public class Board {
 	 * Executes a single move and updates graphics accordingly
 	 */
 	public void doMove(int index) {
-		AL_stones_placed = 1;
+		AL_stones_placed = 0;
 		AL_index = index; // get the starting index of the move
 		animationInProgress = true; // prevent further ui input while true
 		AL_stones_held = ((GameCup) cups.get(AL_index)).removeStones(); // remove and remember stones from chosen cup
@@ -255,7 +255,7 @@ public class Board {
 	private ActionListener getActionListener() {
 		ActionListener a = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (AL_stones_placed == AL_stones_held || AL_stones_placed > AL_stones_held) {
+				if (AL_stones_placed >= AL_stones_held) {
 					animationInProgress = false;
 					((Timer) e.getSource()).stop();
 					turnEnd(AL_index);
@@ -287,9 +287,25 @@ public class Board {
 	 * @throws InterruptedException
 	 */
 	private void turnEnd(int index) {
-		if (index == 13 || index == 6 || cups.get(index).getNumStones() == 0) {
-			playerTurn = !playerTurn;
+		if(playerTurn) {
+			if(index == 6) {
+				//Is waiting for input...
+				return;
+			}else if(cups.get(index).getNumStones() == 0) {
+				//Capture Stones then end turn
+			}else {
+				playerTurn = !playerTurn;
+			}
 			doMove(AI.getMoveIndex(getBoard()));
+		} else {
+			if(index == 13) {
+				//Computer Goes again
+				doMove(AI.getMoveIndex(getBoard()));
+			} else if(cups.get(index).getNumStones() == 0) {
+				//Capture Stones then end turn
+			} else {
+				playerTurn = !playerTurn;
+			}
 		}
 		
 	}
