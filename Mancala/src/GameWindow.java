@@ -40,7 +40,6 @@ public class GameWindow extends JFrame {
 		add(gamePanel);
 		remove(homePanel);
 		remove(helpPanel);
-		remove(endPanel);
 		revalidate();
 		gamePanel.repaint();
 	}
