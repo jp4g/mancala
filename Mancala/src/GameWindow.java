@@ -6,24 +6,25 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 /**
  * GameWindow
- * 
+ *
  * @author Peter Cooke
  */
 public class GameWindow extends JFrame {
-	
+
+
 	public Toolkit tk = Toolkit.getDefaultToolkit();
-	
+
 	public GamePanel gamePanel;
 	public HomePanel homePanel;
 	public HelpPanel helpPanel;
 	public EndPanel endPanel;
 
-	
+
 	public GameWindow() {
 		gamePanel = new GamePanel();
 		homePanel = new HomePanel();
 		helpPanel = new HelpPanel();
-		
+
 		setBounds(tk.getScreenSize().width / 2 - 600, tk.getScreenSize().height / 2 - 400, 1200, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setAlwaysOnTop(true);
@@ -34,7 +35,7 @@ public class GameWindow extends JFrame {
 
 		add(homePanel);
 	}
-	
+
 	public void showGamePanel() {
 		add(gamePanel);
 		remove(homePanel);
@@ -52,7 +53,7 @@ public class GameWindow extends JFrame {
 		revalidate();
 		homePanel.repaint();
 	}
-	
+
 	public void showHelpPanel() {
 		add(helpPanel);
 		remove(homePanel);
@@ -60,24 +61,16 @@ public class GameWindow extends JFrame {
 		revalidate();
 		helpPanel.repaint();
 	}
-	
-	public void showEndPanel(EndCondition e) {
-		endPanel = new EndPanel(e);
-		add(endPanel);
-		remove(gamePanel);
-		revalidate();
-		endPanel.repaint();
-	}
 
 	public void repaintGamePanel(){
 		gamePanel.repaint();
 	}
-	
+
 	public void closeWindow() {
 		dispose();
 	}
 
-	
+
 
 	public static BufferedImage loadImage(String i) {
 		BufferedImage image = null;
@@ -90,5 +83,6 @@ public class GameWindow extends JFrame {
 		}
 		return null;
 	}
-	
+
+
 }
