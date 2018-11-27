@@ -281,13 +281,13 @@ public class Board {
 			int tDistance = 0;
 			for(int q = i; q>6 ;q--) {
 			qDistance++;
-				if(cups.get(q).getNumStones() == qDistance) {
+				if(cups.get(q).getNumStones() == qDistance && cups.get(12-q).getNumStones() != 0) {
 					computerMove = q;
 				}
 			}
 			for(int t=i; t<13; t++) {
 				tDistance++;
-				if(cups.get(t).getNumStones()+tDistance == 14) {
+				if(cups.get(t).getNumStones()+tDistance == 14 && cups.get(12-t).getNumStones() != 0) {
 					computerMove = t;
 				}
 			}
