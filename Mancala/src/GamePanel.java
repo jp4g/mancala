@@ -20,8 +20,9 @@ public class GamePanel extends JPanel implements MouseListener{
 
 	public BufferedImage mancalaBoard = null;
 
-	public GamePanel(Board board) {
-		this.board = board;
+	public GamePanel(Board b) {
+		//this.board = b;
+		board = new Board();
 		mancalaBoard = GameWindow.loadImage("MancalaBoard.png");
 		setLayout(null);
 		
@@ -31,20 +32,20 @@ public class GamePanel extends JPanel implements MouseListener{
 		backButton.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				board = new Board();
 				Main.window.showHomePanel();
 			}
 		});
 		
 		add(backButton);
 		addMouseListener(this);
+		//Main.window.repaintGamePanel();
 	}
 	
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		System.out.println("Repaint Called");
-		
 		g.drawImage(mancalaBoard, 0, 0, null);
 		
 		board.paint(g);
@@ -63,11 +64,6 @@ public class GamePanel extends JPanel implements MouseListener{
 	 */
 	public void setBoard(Board board) {
 		this.board = board;
-	}
-	
-	
-	public static void resetGame() {
-		
 	}
 
 

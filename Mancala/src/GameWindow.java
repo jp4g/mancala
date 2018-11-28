@@ -24,7 +24,8 @@ public class GameWindow extends JFrame {
 		gamePanel = new GamePanel(board);
 		homePanel = new HomePanel();
 		helpPanel = new HelpPanel();
-
+		endPanel = new EndPanel(EndCondition.LOSE);
+		
 		setBounds(tk.getScreenSize().width / 2 - 600, tk.getScreenSize().height / 2 - 400, 1200, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setAlwaysOnTop(true);
@@ -46,6 +47,7 @@ public class GameWindow extends JFrame {
 
 	public void showHomePanel() {
 		add(homePanel);
+		remove(endPanel);
 		remove(helpPanel);
 		remove(gamePanel);
 		revalidate();

@@ -51,12 +51,19 @@ public class AI {
 		for(int i = AI_FIRST_CUP; i < AI_GOAL_CUP; i++) {
 			int target_index = (cups.get(i).getNumStones() + i) % 14; // find index of cup that last stone is placed in
 			int player_index = AI_GOAL_CUP - target_index - 1; // find corresponding cup on player's side
-			if(target_index >= AI_FIRST_CUP && target_index < AI_GOAL_CUP) { // ensure that target index is on AI's side
-				if (cups.get(target_index).getNumStones() == 0 && cups.get(player_index).getNumStones() != 0) // check capture conditions
-					index = i;
+			if(cups.get(i).getNumStones() > 0) {	
+				if(target_index >= AI_FIRST_CUP && target_index < AI_GOAL_CUP) { // ensure that target index is on AI's side
+					if (cups.get(target_index).getNumStones() == 0 && cups.get(player_index).getNumStones() != 0) // check capture conditions
+						index = i;
+				}
 			}
 		}
 		return index;
+	}
+	
+	
+	public static int randomMove() {
+		return (int) ((Math.random() * (((AI_GOAL_CUP-1) - AI_FIRST_CUP) + 1)) + AI_FIRST_CUP);
 	}
 			
 	/**
