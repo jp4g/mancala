@@ -14,6 +14,7 @@ public class GoalCup implements Cup {
 	private Cup next_cup;
 	private boolean player; // true if cup is owned by the player, false if the cup is owned by the computer
 	private Rectangle ui_rectangle;
+	private boolean needsUpdate;
 	
 	public GoalCup(Rectangle r) { 
 		ui_rectangle = r;
@@ -25,6 +26,7 @@ public class GoalCup implements Cup {
 	 */
 	public void addStone() {
 		num_stones++;
+		needsUpdate = true;
 	}
 
 	/**
@@ -33,6 +35,7 @@ public class GoalCup implements Cup {
 	 */
 	public void addStone(int stones) {
 		num_stones += stones;
+		needsUpdate = true;
 	}
 
 	/**
@@ -97,8 +100,16 @@ public class GoalCup implements Cup {
 		g.setFont(font);
 		g.setColor(Color.WHITE);
 		g.drawString(Integer.toString(num_stones), ui_rectangle.x + 47, ui_rectangle.y+150);
-		
+		if(needsUpdate)
+			drawHighlightSelection(g);
 	}
+	
+	public void drawHighlightSelection(Graphics g) {
+		g.setColor(Color.WHITE);
+		g.drawRoundRect(ui_rectangle.x, ui_rectangle.y, ui_rectangle.width, ui_rectangle.height,25,25);
+		needsUpdate = false;
+	}
+	
 
 	@Override
 	public void drawBadSelection(Graphics g) {

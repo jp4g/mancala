@@ -14,6 +14,9 @@ public class HelpPanel extends JPanel{
 	
 	public JButton backButton;
 	
+	/**
+	 * Initialize HelpPanel 
+	 */
 	public HelpPanel() {
 		setLayout(null);
 		
@@ -31,6 +34,9 @@ public class HelpPanel extends JPanel{
 		add(backButton);
 	}
 	
+	/**
+	 * Paint HelpPanel
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);

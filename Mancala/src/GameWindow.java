@@ -20,6 +20,10 @@ public class GameWindow extends JFrame {
 	public EndPanel endPanel;
 
 
+	/**
+	 * Initialize GameWindow With A Board
+	 * @param e
+	 */
 	public GameWindow(Board board) {
 		gamePanel = new GamePanel(board);
 		homePanel = new HomePanel();
@@ -37,6 +41,9 @@ public class GameWindow extends JFrame {
 		add(homePanel);
 	}
 
+	/**
+	 * Safely Displays GamePanel
+	 */
 	public void showGamePanel() {
 		add(gamePanel);
 		remove(homePanel);
@@ -45,6 +52,9 @@ public class GameWindow extends JFrame {
 		gamePanel.repaint();
 	}
 
+	/**
+	 * Safely Displays HomePanel
+	 */
 	public void showHomePanel() {
 		add(homePanel);
 		remove(endPanel);
@@ -54,6 +64,9 @@ public class GameWindow extends JFrame {
 		homePanel.repaint();
 	}
 
+	/**
+	 * Safely Displays HelpPanel
+	 */
 	public void showHelpPanel() {
 		add(helpPanel);
 		remove(homePanel);
@@ -61,6 +74,9 @@ public class GameWindow extends JFrame {
 		helpPanel.repaint();
 	}
 	
+	/**
+	 * Safely Displays EndPanel
+	 */
 	public void showEndPanel(EndCondition e) {
 		endPanel = new EndPanel(e);
 		add(endPanel);
@@ -69,16 +85,26 @@ public class GameWindow extends JFrame {
 		endPanel.repaint();
 	}
 
+	/**
+	 * Repaints GamePanel
+	 */
 	public void repaintGamePanel(){
 		gamePanel.repaint();
 	}
 
+	/**
+	 * Close the Game
+	 */
 	public void closeWindow() {
 		dispose();
 	}
 
 
-
+	/**
+	 * Load image from resources into BufferedImage to be painted.
+	 * @param i
+	 * @return
+	 */
 	public static BufferedImage loadImage(String i) {
 		BufferedImage image = null;
 		URL resource = GamePanel.class.getResource("resources/"+i);

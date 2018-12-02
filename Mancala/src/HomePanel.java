@@ -13,11 +13,13 @@ import javax.swing.JPanel;
 public class HomePanel extends JPanel {
 
 	public BufferedImage mancala = null;
-	
 	public JButton startButton;
 	public JButton quitButton;
 	public JButton helpButton;
 	
+	/**
+	 * Initialize HomePanel
+	 */
 	public HomePanel() {
 		mancala = GameWindow.loadImage("Mancala.png");
 		
@@ -59,6 +61,9 @@ public class HomePanel extends JPanel {
 		add(quitButton);
 	}
 
+	/**
+	 * Paint HomePanel
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);

@@ -19,6 +19,7 @@ public class GameCup implements Cup{
 	private Cup next_cup;
 	private boolean player; // true if cup is owned by the player, false if the cup is owned by the computer
 	private Rectangle ui_rectangle;
+	private boolean needsUpdate;
 	
 	public GameCup(Rectangle r) {
 		ui_rectangle = r;
@@ -30,6 +31,7 @@ public class GameCup implements Cup{
 	 */
 	public void addStone() {
 		num_stones++;
+		needsUpdate = true;
 	}
 
 	/**
@@ -39,6 +41,7 @@ public class GameCup implements Cup{
 	public int removeStones() {
 		int temp = num_stones;
 		num_stones = 0;
+		needsUpdate = true;
 		return temp;
 	}
 	
@@ -48,6 +51,7 @@ public class GameCup implements Cup{
 	 */
 	public void addStone(int stones) {
 		num_stones += stones;
+		needsUpdate = true;
 	}
 
 	/**
@@ -114,17 +118,28 @@ public class GameCup implements Cup{
 		g.setFont(font);
 		g.setColor(Color.WHITE);
 		g.drawString(Integer.toString(num_stones), ui_rectangle.x + 45, ui_rectangle.y+60);	
+		if(needsUpdate) 
+			drawHighlightSelection(g);
+		
+	}
+	
+	public void drawHighlightSelection(Graphics g) {
+		g.setColor(Color.WHITE);
+		g.drawRoundRect(ui_rectangle.x, ui_rectangle.y, ui_rectangle.width, ui_rectangle.height,25,25);
+		needsUpdate = false;
 	}
 	
 	public void drawBadSelection(Graphics g) {
 		g.setColor(Color.RED);
 		g.drawRect(ui_rectangle.x, ui_rectangle.y, ui_rectangle.width, ui_rectangle.height);
+		needsUpdate = false;
 	}
 
 	@Override
 	public void drawGoodSelection(Graphics g) {
 		g.setColor(Color.GREEN);
 		g.drawRect(ui_rectangle.x, ui_rectangle.y, ui_rectangle.width, ui_rectangle.height);
+		needsUpdate = false;
 		
 	}
 

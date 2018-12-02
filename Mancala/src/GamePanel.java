@@ -15,13 +15,14 @@ import javax.swing.JPanel;
 public class GamePanel extends JPanel implements MouseListener{
 	
 	public Board board;
-	
 	public JButton backButton;
-
 	public BufferedImage mancalaBoard = null;
 
+	/**
+	 * Initialize GamePanel With A Board
+	 * @param e
+	 */
 	public GamePanel(Board b) {
-		//this.board = b;
 		board = new Board();
 		mancalaBoard = GameWindow.loadImage("MancalaBoard.png");
 		setLayout(null);
@@ -39,10 +40,12 @@ public class GamePanel extends JPanel implements MouseListener{
 		
 		add(backButton);
 		addMouseListener(this);
-		//Main.window.repaintGamePanel();
 	}
 	
 
+	/**
+	 * Paint Game Panel
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);

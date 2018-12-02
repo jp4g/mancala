@@ -15,6 +15,10 @@ public class EndPanel extends JPanel{
 	private EndCondition ec;
 	private JButton mainMenuButton;
 	
+	/**
+	 * Initialize EndPanel With A EndCondition
+	 * @param e
+	 */
 	public EndPanel(EndCondition e) {
 		ec = e;
 		
@@ -33,7 +37,9 @@ public class EndPanel extends JPanel{
 		add(mainMenuButton);
 	}
 	
-	
+	/**
+	 * Paint End Screen
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
