@@ -25,7 +25,7 @@ public class GameWindow extends JFrame {
 	 * @param e
 	 */
 	public GameWindow(Board board) {
-		gamePanel = new GamePanel(board);
+		gamePanel = new GamePanel();
 		homePanel = new HomePanel();
 		helpPanel = new HelpPanel();
 		endPanel = new EndPanel(EndCondition.LOSE);
@@ -49,6 +49,7 @@ public class GameWindow extends JFrame {
 		remove(homePanel);
 		remove(helpPanel);
 		revalidate();
+		Main.board = new Board();
 		gamePanel.repaint();
 	}
 

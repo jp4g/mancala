@@ -26,7 +26,7 @@ public class EndPanel extends JPanel{
 		
 		setLayout(null);
 		
-		mainMenuButton.setBounds(500, 520, 180, 60);
+		mainMenuButton.setBounds(500, 620, 180, 60);
 		mainMenuButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -48,14 +48,24 @@ public class EndPanel extends JPanel{
 		switch (ec) {
 		case WIN:
 			g.drawString("You Win!", 450, 400);
+			drawScore(g);
 			break;
 		case LOSE:
 			g.drawString("You Lose!", 450, 400);
+			drawScore(g);
 			break;
 		case TIE:
 			g.drawString("Draw!", 450, 400);
+			drawScore(g);
 			break;
 		}
+	}
+	
+	private void drawScore(Graphics g) {
+		Font font = g.getFont().deriveFont(36.0f);
+		g.setFont(font);
+		g.drawString("Player Wins: "+Scores.getScore(true), 450, 500);
+		g.drawString("Computer Wins: "+Scores.getScore(false), 450, 550);
 	}
 	
 }

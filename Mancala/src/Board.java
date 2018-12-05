@@ -55,7 +55,7 @@ public class Board {
 	/**
 	 * Run all initializing methods for starting a new game
 	 */
-	private void initialize() {
+	public void initialize() {
 		initCups();
 		generateOpposites();
 		chooseFirst();
@@ -132,7 +132,7 @@ public class Board {
 		cups.add(new GameCup(new Rectangle(855, 410, 105, 105)));
 		// Player goal cup
 		cups.add(new GoalCup(new Rectangle(980, 235, 105, 280)));
-
+		
 		// AI Opponent game cups
 		cups.add(new GameCup(new Rectangle(855, 240, 105, 105)));
 		cups.add(new GameCup(new Rectangle(735, 240, 105, 105)));
@@ -142,65 +142,6 @@ public class Board {
 		cups.add(new GameCup(new Rectangle(240, 240, 105, 105)));
 		// AI Opponent goal cup
 		cups.add(new GoalCup(new Rectangle(115, 235, 102, 280)));
-	}
-
-	/**
-	 * AI Opponent evaluates the board and returns its chosen move.
-	 * 
-	 * @return the index of the cup to begin moving from
-	 */
-	private int getComputerPos() {
-		// Evaluate each cup to see if a second turn can be achieved
-		/** 1/4 preferred move type **/
-		for (int i = AI_GOAL_CUP - 1; i >= AI_FIRST_CUP; i--) {
-			if (cups.get(i).getNumStones() == AI_GOAL_CUP - i)
-				return i;
-		}
-
-		// Distance++; // increment distance as moving away from AI Opponent's goal cup
-		// If the last stone can move to the AI Opponent's cup, that cup is empty and
-		// the
-		// Player'ss cup have some stones,
-		// then do that move
-
-		/** 2/4 preferred move type **/
-		for (int i = AI_GOAL_CUP - 1; i >= AI_FIRST_CUP; i--) {
-			if (cups.get(i).getNumStones() == 0) { // if current cup has no stones
-				int qDistance = 0; //
-				int tDistance = 0;
-				for (int q = i; q >= AI_FIRST_CUP; q--) {
-					qDistance++;
-					if (cups.get(q).getNumStones() == qDistance && cups.get(12 - q).getNumStones() != 0)
-						return q;
-				}
-				for (int t = i; t < 13; t++) {
-					tDistance++;
-					if (cups.get(t).getNumStones() + tDistance == 14 && cups.get(12 - t).getNumStones() != 0)
-						return t;
-				}
-			}
-		}
-
-		// Evaluate each cup to see if a stone can be placed in the bank
-		/** 3/4 preferred move type **/
-		for (int i = AI_GOAL_CUP - 1; i >= AI_FIRST_CUP; i--) {
-			if (i + cups.get(i).getNumStones() >= AI_GOAL_CUP)
-				return i;
-		}
-
-		// Iterate from the AI Opponent's first game cup to its last game cup
-		// Returns the first cup it finds that has stones
-		/** 4/4 preferred move type **/
-		for (int i = AI_FIRST_CUP; i < AI_GOAL_CUP; i++) {
-			if (cups.get(i).getNumStones() != 0)
-				return i;
-		}
-
-		// No cup on the AI Opponent's side of the board had stones and the AI cannot
-		// make a move
-		// This should not ever occur.
-		System.out.println("There are no AI Opponent game cups containing stones.");
-		return -1;
 	}
 
 	/**
@@ -320,27 +261,15 @@ public class Board {
 			if(tie()) {
 				Main.window.showEndPanel(EndCondition.TIE);
 			} else if(playerWins()) {
+				Scores.increaseScore(true);
 				Main.window.showEndPanel(EndCondition.WIN);
 			} else {
+				Scores.increaseScore(false);
 				Main.window.showEndPanel(EndCondition.LOSE);
 			}
 		}
 	}
 	
-
-	/**
-	 * Determines the index of the cup that the first stone of a turn should be
-	 * placed in
-	 * 
-	 * @param index the index chosen for the move
-	 * @return the index to begin placing stones in
-	 */
-	private int trueIndex(int index) {
-		// prefix increment index to place first stone in the cup next to the chosen cup
-		// account for index being out of bounds of board by taking remainder of index /
-		// 14, then return
-		return ++index % 14;
-	}
 
 	/**
 	 * Refers to playerTurn boolean to determine if a cup is the opposing player's
@@ -441,20 +370,6 @@ public class Board {
 		else
 			return true;
 
-	}
-
-	/**
-	 * Choose which screen to display at end condition.
-	 */
-	private void handleEnd() {
-		if (tie())
-			Main.window.showEndPanel(EndCondition.TIE);
-		else {
-			if (playerWins())
-				Main.window.showEndPanel(EndCondition.WIN);
-			else
-				Main.window.showEndPanel(EndCondition.LOSE);
-		}
 	}
 
 }

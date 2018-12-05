@@ -22,8 +22,8 @@ public class GamePanel extends JPanel implements MouseListener{
 	 * Initialize GamePanel With A Board
 	 * @param e
 	 */
-	public GamePanel(Board b) {
-		board = new Board();
+	public GamePanel() {
+		board = Main.board;
 		mancalaBoard = GameWindow.loadImage("MancalaBoard.png");
 		setLayout(null);
 		
@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements MouseListener{
 		backButton.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				board = new Board();
+				//board = new Board();
 				Main.window.showHomePanel();
 			}
 		});
@@ -51,10 +51,10 @@ public class GamePanel extends JPanel implements MouseListener{
 		super.paintComponent(g);
 		g.drawImage(mancalaBoard, 0, 0, null);
 		
-		board.paint(g);
+		Main.board.paint(g);
 		
 		g.setColor(Color.BLACK);
-		if(board.playerTurn)
+		if(Main.board.playerTurn)
 			g.drawString("Your Turn.", 500, 600);
 		else
 			g.drawString("Computer Turn...", 500, 600);
@@ -74,27 +74,14 @@ public class GamePanel extends JPanel implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		Graphics g = getGraphics();
 		
-		int pos = board.getBoardPosition(e.getPoint());
+		int pos = Main.board.getBoardPosition(e.getPoint());
 
 		System.out.println("mouseClicked Listener: pos = " + pos);
 		if (pos == -1)
 			return;
 
-		if(board.validateMove(pos))
-			board.doMove(pos);
-		
-		/*
-		if (isClickablePosition(pos)) {
-			System.out.println(pos);
-			if (!board.animationInProgress)
-				if ((pos >= 0) && (pos <= 5)) {
-					board.doMove(pos);
-				}
-		} else {
-			// board.getBoard().get(pos).drawBadSelection(g);
-		}
-		*/
-		
+		if(Main.board.validateMove(pos))
+			Main.board.doMove(pos);
 		
 	}
 
@@ -108,23 +95,7 @@ public class GamePanel extends JPanel implements MouseListener{
 
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		/* DO NOT WORK ON THIS UNTIL DELAY IS FIXED
-		Graphics g = getGraphics();
-		int pos = board.getBoardPosition(e.getPoint());
-		System.out.println("GamePanel mousePressed Listener: Pos = "+pos);
-		if (pos == -1)
-			return;
-
-		if (isClickablePosition(pos)) {
-			board.getBoard().get(pos).drawGoodSelection(g);
-		} else {
-			board.getBoard().get(pos).drawBadSelection(g);
-		}
-		
-		repaint();
-		*/
-	}
+	public void mousePressed(MouseEvent e) {}
 
 
 	@Override
@@ -134,7 +105,6 @@ public class GamePanel extends JPanel implements MouseListener{
 	
 	private boolean isClickablePosition(int pos) {
 		return (pos >= 0 && pos <=5) ? true : false;
-		//Also need to check that it is there turn
 	}
 
 }

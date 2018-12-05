@@ -12,6 +12,7 @@ import javax.swing.JPanel;
  */
 public class HomePanel extends JPanel {
 
+	
 	public BufferedImage mancala = null;
 	public JButton startButton;
 	public JButton quitButton;
